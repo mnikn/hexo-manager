@@ -3,7 +3,10 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
-import { NbLayoutModule, NbSidebarModule, NbSidebarService, NbThemeModule } from '@nebular/theme';
+import { AppRoutingModule } from './app-routing.module';
+import { HomeModule } from './home/home.module';
+import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -12,11 +15,12 @@ import { NbLayoutModule, NbSidebarModule, NbSidebarService, NbThemeModule } from
   ],
   imports: [
     BrowserModule,
-    NbThemeModule.forRoot({ name: 'default' }),
-    NbLayoutModule,
-    NbSidebarModule,
+    NgZorroAntdModule.forRoot(),
+    BrowserAnimationsModule,
+    HomeModule,
+    AppRoutingModule,
   ],
-  providers: [NbSidebarService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

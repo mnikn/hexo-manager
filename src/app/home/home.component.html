@@ -1,0 +1,16 @@
+<!--<app-home-menu></app-home-menu>-->
+
+
+<nz-layout class="layout full-height">
+  <nz-header style="margin-bottom: 1px">
+    <app-home-tool-bar></app-home-tool-bar>
+  </nz-header>
+  <nz-layout>
+    <nz-sider nzCollapsible [nzCollapsed]="menu ? menu.isCollapsed : false">
+      <app-home-menu></app-home-menu>
+    </nz-sider>
+    <nz-content class="content-body">
+      <router-outlet></router-outlet>
+    </nz-content>
+  </nz-layout>
+</nz-layout>
