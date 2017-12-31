@@ -1,0 +1,19 @@
+{
+  "home": {
+    "tool_bar": {
+      "refresh": "refresh articles",
+      "add": "add article",
+      "delete": "delete selected article",
+      "tags": "show all article tags",
+      "deploy": "deploy blog into github",
+      "move_to_post": "move to post box",
+      "move_to_draft": "move to draft box",
+      "search_hint": "input search article name or tag..."
+    },
+    "menu": {
+      "summary": "Summary",
+      "post_box": "Post box",
+      "draft_box": "Draft box"
+    }
+  }
+}

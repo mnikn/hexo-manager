@@ -1,8 +1,8 @@
-<nz-tooltip [nzTitle]="model.title" [nzPlacement]="'bottom'">
+<nz-tooltip [nzTitle]="model.title" [nzPlacement]="model.hintPlacement">
   <button nz-button
           nz-tooltip
-          [nzShape]="'circle'"
-          [nzType]="'default'"
+          [nzShape]="model.shape"
+          [nzType]="model.type"
           [nzSize]="model.size">
     <i [class]="model.icon"></i>
   </button>

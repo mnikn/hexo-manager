@@ -1,0 +1,19 @@
+{
+  "home": {
+    "tool_bar": {
+      "refresh": "刷新文章",
+      "add": "添加新文章",
+      "delete": "删除文章",
+      "tags": "显示所有标签",
+      "deploy": "部署博客到github",
+      "move_to_post": "移到发表箱",
+      "move_to_draft": "移到草稿箱",
+      "search_hint": "输入要查找的文章名字或标签..."
+    },
+    "menu": {
+      "summary": "概况",
+      "post_box": "发表箱",
+      "draft_box": "草稿箱"
+    }
+  }
+}

@@ -1,9 +1,6 @@
-<!--<app-home-menu></app-home-menu>-->
-
-
 <nz-layout class="layout full-height">
   <nz-header style="margin-bottom: 1px">
-    <app-home-tool-bar></app-home-tool-bar>
+    <app-home-tool-bar [user]="content"></app-home-tool-bar>
   </nz-header>
   <nz-layout>
     <nz-sider [nzCollapsed]="menu ? menu.isCollapsed : false">

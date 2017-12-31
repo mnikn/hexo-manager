@@ -8,11 +8,13 @@ import { SummaryComponent } from './summary/summary.component';
 import { ToolBarComponent } from './tool-bar/tool-bar.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ComponentModule } from '../core/component/component.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     NgZorroAntdModule,
+    TranslateModule,
     HomeRoutingModule,
     ComponentModule
   ],
