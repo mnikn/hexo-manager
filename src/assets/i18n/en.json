@@ -16,5 +16,10 @@
       "post_box": "Post box",
       "draft_box": "Draft box"
     }
+  },
+  "editor": {
+    "tool_bar": {
+      "backward": "backward to home page"
+    }
   }
 }

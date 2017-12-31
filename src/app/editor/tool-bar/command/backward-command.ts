@@ -1,11 +1,11 @@
 import { Command } from '../../../core/component/button/command';
-export class EditCommand extends Command {
+export class BackWardCommand extends Command {
 
   constructor(user?: any) {
     super(user);
   }
 
   execute(): any {
-    this.user.router.navigate(['/editor', 1]);
+    this.user.router.navigate(['/home']);
   }
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Article, ArticleStatus } from '../../core/model/article';
 
 @Component({
@@ -13,7 +13,8 @@ export class ArticleListComponent implements OnInit {
   public contentHeight: number = window.screen.height;
   public articles: Article[] = [new Article(), new Article(), new Article(), new Article()];
 
-  constructor(private route: ActivatedRoute) {
+  constructor(public router: Router,
+              private route: ActivatedRoute) {
     this.route.url.subscribe(value => {
       switch (value[1].path) {
         case 'post':

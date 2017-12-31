@@ -55,7 +55,7 @@ export class ToolBarComponent implements OnInit {
     } else {
       this.currentButtons = this.summaryButtons;
     }
-    this.currentButtons.forEach(e => e.command.user = this.user);
+    this.currentButtons.forEach(e => e.command.user = user);
   }
 
   private initButtons(tool_bar: any): void {

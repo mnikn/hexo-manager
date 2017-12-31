@@ -3,10 +3,18 @@ export interface ICommand {
 }
 
 export abstract class Command implements ICommand {
-  public user: any;
+  private _user: any;
 
   constructor(user?: any) {
     this.user = user;
+  }
+
+  get user(): any {
+    return this._user;
+  }
+
+  set user(value: any) {
+    this._user = value;
   }
 
   execute() {

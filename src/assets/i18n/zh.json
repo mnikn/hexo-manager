@@ -16,5 +16,10 @@
       "post_box": "发表箱",
       "draft_box": "草稿箱"
     }
+  },
+  "editor": {
+    "tool_bar": {
+      "backward": "回退到主页"
+    }
   }
 }
