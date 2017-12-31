@@ -1,12 +1,12 @@
 <nz-layout class="layout full-height">
-  <nz-header style="margin-bottom: 1px">
+  <nz-header>
     <app-home-tool-bar [user]="content"></app-home-tool-bar>
   </nz-header>
   <nz-layout>
-    <nz-sider [nzCollapsed]="menu ? menu.isCollapsed : false">
+    <nz-sider style="margin-top: 1px" [nzCollapsed]="menu ? menu.isCollapsed : false">
       <app-home-menu></app-home-menu>
     </nz-sider>
-    <nz-content class="content-body">
+    <nz-content style="margin-left: 1px;margin-top: 1px">
       <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
     </nz-content>
   </nz-layout>

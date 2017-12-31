@@ -9,6 +9,7 @@ import { ToolBarComponent } from './tool-bar/tool-bar.component';
 import { ArticleListComponent } from './article-list/article-list.component';
 import { ComponentModule } from '../core/component/component.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ArticleCardComponent } from './article-list/article-card/article-card.component';
 
 @NgModule({
   imports: [
@@ -27,7 +28,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MenuComponent,
     SummaryComponent,
     ToolBarComponent,
-    ArticleListComponent]
+    ArticleListComponent,
+    ArticleCardComponent]
 })
 export class HomeModule {
 }

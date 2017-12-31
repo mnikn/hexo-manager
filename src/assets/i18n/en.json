@@ -8,6 +8,7 @@
       "deploy": "deploy blog into github",
       "move_to_post": "move to post box",
       "move_to_draft": "move to draft box",
+      "edit": "edit selected article",
       "search_hint": "input search article name or tag..."
     },
     "menu": {

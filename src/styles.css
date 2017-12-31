@@ -1,7 +1,22 @@
 .full-height {
   height: 100%;
 }
+
 .content-body {
   margin: 10px;
   height: 100%;
+}
+
+.scrollable-content {
+  overflow: scroll;
+}
+
+.theme-dark {
+  background: #404040;
+  color: #ffffff;
+}
+
+.theme-light {
+  background: #ffffff;
+  color: #000000;
 }

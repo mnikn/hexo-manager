@@ -1,7 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Button } from '../../core/component/button/button';
 import { ArticleListComponent } from '../article-list/article-list.component';
-import { articleStatus } from '../../core/model/article-status';
 import { RefreshCommand } from './command/refresh-command';
 import { TagsCommand } from './command/tags-command';
 import { AddCommand } from './command/add-command';
@@ -10,6 +9,8 @@ import { DeployCommand } from './command/deploy-command';
 import { MoveToDraftCommand } from './command/move-to-draft';
 import { MoveToPostCommand } from './command/move-to-post';
 import { TranslateService } from '@ngx-translate/core';
+import { EditCommand } from './command/edit-command';
+import { ArticleStatus } from '../../core/model/article';
 
 @Component({
   selector: 'app-home-tool-bar',
@@ -46,7 +47,7 @@ export class ToolBarComponent implements OnInit {
 
   private changeCurrentButtons(user: any): void {
     if (user instanceof ArticleListComponent) {
-      if (user.currentArticleStatus === articleStatus.post) {
+      if (user.currentArticleStatus === ArticleStatus.post) {
         this.currentButtons = this.postButtons;
       } else {
         this.currentButtons = this.draftButtons;
@@ -68,6 +69,7 @@ export class ToolBarComponent implements OnInit {
     let deployButton = new Button(tool_bar.deploy, shape, new DeployCommand(), size, 'anticon anticon-upload');
     let moveToPostButton = new Button(tool_bar.move_to_post, shape, new MoveToPostCommand(), size, 'anticon anticon-swap');
     let moveToDraftButton = new Button(tool_bar.move_to_draft, shape, new MoveToDraftCommand(), size, 'anticon anticon-swap');
+    let editButton = new Button(tool_bar.edit, shape, new EditCommand(), size, 'anticon anticon-edit');
 
     this.summaryButtons = [
       refreshButton,
@@ -80,7 +82,8 @@ export class ToolBarComponent implements OnInit {
       addButton,
       deleteButton,
       deployButton,
-      moveToDraftButton
+      moveToDraftButton,
+      editButton
     ];
     this.draftButtons = [
       refreshButton,
@@ -88,7 +91,8 @@ export class ToolBarComponent implements OnInit {
       addButton,
       deleteButton,
       deployButton,
-      moveToPostButton
+      moveToPostButton,
+      editButton
     ];
   }
 
