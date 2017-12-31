@@ -9,26 +9,22 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class ArticleListComponent implements OnInit {
 
-  public showArticleStatus: articleStatus;
+  public currentArticleStatus: articleStatus;
 
   constructor(private route: ActivatedRoute) {
-  }
-
-  ngOnInit() {
     this.route.url.subscribe(value => {
       switch (value[1].path) {
         case 'post':
-          this.showArticleStatus = articleStatus.post;
+          this.currentArticleStatus = articleStatus.post;
           break;
         case 'draft':
-          this.showArticleStatus = articleStatus.draft;
+          this.currentArticleStatus = articleStatus.draft;
           break;
       }
     });
-    // this.route.paramMap.forEach((params) => {
-    //   this.selectStatus = Number(params.get('status'));
-    //   this.getArticles();
-    // });
+  }
+
+  ngOnInit() {
   }
 
 }

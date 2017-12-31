@@ -6,11 +6,11 @@
     <app-home-tool-bar></app-home-tool-bar>
   </nz-header>
   <nz-layout>
-    <nz-sider nzCollapsible [nzCollapsed]="menu ? menu.isCollapsed : false">
+    <nz-sider [nzCollapsed]="menu ? menu.isCollapsed : false">
       <app-home-menu></app-home-menu>
     </nz-sider>
     <nz-content class="content-body">
-      <router-outlet></router-outlet>
+      <router-outlet (activate)="onRouterOutletActivate($event)"></router-outlet>
     </nz-content>
   </nz-layout>
 </nz-layout>

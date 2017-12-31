@@ -1,9 +1,9 @@
-<nz-tooltip [nzTitle]="nzTitle" [nzPlacement]="'bottom'">
+<nz-tooltip [nzTitle]="model.title" [nzPlacement]="'bottom'">
   <button nz-button
           nz-tooltip
           [nzShape]="'circle'"
           [nzType]="'default'"
-          [nzSize]="nzSize">
-    <i [class]="icon"></i>
+          [nzSize]="model.size">
+    <i [class]="model.icon"></i>
   </button>
 </nz-tooltip>

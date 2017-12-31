@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IconButtonComponent } from './icon-button/icon-button.component';
+import { ButtonComponent } from './button/button.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
+import { ButtonGroupComponent } from './button-group/button-group.component';
 
 @NgModule({
   imports: [
@@ -9,9 +10,10 @@ import { NgZorroAntdModule } from 'ng-zorro-antd';
     NgZorroAntdModule
   ],
   exports: [
-    IconButtonComponent
+    ButtonComponent,
+    ButtonGroupComponent
   ],
-  declarations: [IconButtonComponent]
+  declarations: [ButtonComponent, ButtonGroupComponent]
 })
 export class ComponentModule {
 }

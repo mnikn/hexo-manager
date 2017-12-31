@@ -1,28 +1,14 @@
 <div class="full-height">
-  <app-nz-icon-button
-    [nzTitle]="'reload all articles'"
-    [icon]="'anticon anticon-reload'">
-  </app-nz-icon-button>
-  <app-nz-icon-button
-    [nzTitle]="'show all article tags'"
-    [icon]="'anticon anticon-tags'">
-  </app-nz-icon-button>
-  <app-nz-icon-button
-    [nzTitle]="'add new article'"
-    [icon]="'anticon anticon-plus'">
-  </app-nz-icon-button>
-  <app-nz-icon-button
-    [nzTitle]="'delete selected article'"
-    [icon]="'anticon anticon-minus'">
-  </app-nz-icon-button>
-  <app-nz-icon-button
-    [nzTitle]="'deploy to github'"
-    [icon]="'anticon anticon-upload'">
-  </app-nz-icon-button>
+  <app-nz-button-group [buttons]="currentButtons">
+  </app-nz-button-group>
 
   <nz-input
     style="width: 200px;float: right"
     [nzType]="'search'"
     [nzPlaceHolder]="'input search text'">
   </nz-input>
+
 </div>
+
+
+

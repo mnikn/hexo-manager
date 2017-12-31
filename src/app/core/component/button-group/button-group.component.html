@@ -1,0 +1,5 @@
+<app-nz-button
+  [model]="button"
+  *ngFor="let button of buttons"
+  (click)="button.command.execute()">
+</app-nz-button>
