@@ -1,8 +1,19 @@
-<nz-card style="border-radius: 10px;cursor: pointer">
+<nz-card class="card"
+         [class.card-selected]="isSelected"
+         style="border-radius: 10px;cursor: pointer">
   <ng-template #title>
-    Card title
+    {{article.title}}
+  </ng-template>
+  <ng-template #extra>
+    <p>{{article.createDate | date: 'yyyy/MM/dd'}}</p>
   </ng-template>
   <ng-template #body>
-    <p>Card content</p>
+    <div nz-row [nzGutter]="8">
+      <div nz-col [nzSpan]="6" *ngFor="let tag of article.tags" style="margin-bottom: 8px;">
+        <button nz-button [nzSize]="'small'" [nzType]="'primary'" (click)="onTagClick(tag)">
+          <span>{{tag}}</span>
+        </button>
+      </div>
+    </div>
   </ng-template>
 </nz-card>

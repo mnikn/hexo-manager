@@ -9,10 +9,19 @@ import { Article } from '../../../core/model/article';
 export class ArticleCardComponent implements OnInit {
 
   @Input() public article: Article;
+  public isSelected: boolean;
 
-  constructor() { }
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  public onTagClick(tag: string): void {
+    let event = window.event;
+    event.stopPropagation();
+
+    console.log(tag);
   }
 
 }

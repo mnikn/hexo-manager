@@ -10,6 +10,7 @@ export class Article {
   private _file: string;
   private _createDate: Date;
   private _content: string;
+  private _tags: string[];
 
 
   get id(): number {
@@ -58,5 +59,13 @@ export class Article {
 
   set content(value: string) {
     this._content = value;
+  }
+
+  get tags(): string[] {
+    return this._tags;
+  }
+
+  set tags(value: string[]) {
+    this._tags = value;
   }
 }

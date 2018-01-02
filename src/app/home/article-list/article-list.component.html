@@ -1,5 +1,5 @@
 <div nz-row [nzGutter]="1" style="height: 100%;overflow: hidden">
-  <div nz-col [nzSpan]="12">
+  <div nz-col [nzSpan]="previewArticle? 12 : 24">
     <div class="scrollable-content"
          [style.height]="contentHeight + 'px'">
       <div style="padding:30px;">
@@ -7,21 +7,21 @@
              [nzGutter]="8"
              style="margin-left: 10px;height: 5000px">
           <div nz-col
-               [nzSpan]="8"
+               [nzSpan]="previewArticle? 12 : 8"
                style="margin-bottom: 8px"
                *ngFor="let article of articles">
-            <app-home-article-card [article]="article">
+            <app-home-article-card [article]="article" (click)="onCardClick(article)">
             </app-home-article-card>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <div nz-col [nzSpan]="12">
+  <div nz-col [nzSpan]="12" *ngIf="previewArticle">
     <div class="scrollable-content"
          [style.height]="contentHeight + 'px'">
       <div style="height: 2000px">
-        <app-article-preview [rawContent]="'preview works!'"></app-article-preview>
+        <app-article-preview [rawContent]="previewArticle.content"></app-article-preview>
       </div>
     </div>
   </div>
