@@ -18,10 +18,10 @@
     </div>
   </div>
   <div nz-col [nzSpan]="12">
-    <div class="scrollable-content theme-light"
+    <div class="scrollable-content"
          [style.height]="contentHeight + 'px'">
-      <div style="margin-left: 10px;height: 2000px">
-        <app-article-preview></app-article-preview>
+      <div style="height: 2000px">
+        <app-article-preview [rawContent]="'preview works!'"></app-article-preview>
       </div>
     </div>
   </div>

@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 import { ComponentModule } from '../core/component/component.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { TranslateModule } from '@ngx-translate/core';
+import { SIMPLEMDE_CONFIG, SimplemdeModule } from 'ng2-simplemde';
 
 @NgModule({
   imports: [
@@ -15,7 +16,11 @@ import { TranslateModule } from '@ngx-translate/core';
     EditorRoutingModule,
     ComponentModule,
     NgZorroAntdModule,
-    TranslateModule
+    TranslateModule,
+    SimplemdeModule.forRoot({
+      provide: SIMPLEMDE_CONFIG,
+      useValue: {}
+    })
   ],
   declarations: [
     EditorComponent,

@@ -2,6 +2,8 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Button } from '../../core/component/button/button';
 import { TranslateService } from '@ngx-translate/core';
 import { BackWardCommand } from "./command/backward-command";
+import { ArticleInfoCommand } from "./command/article-info-command";
+import { SaveCommand } from "./command/save-command";
 
 @Component({
   selector: 'app-editor-tool-bar',
@@ -29,7 +31,9 @@ export class ToolBarComponent implements OnInit {
           const shape = 'circle';
 
           this.buttons = [
-            new Button(tool_bar.backward, shape, new BackWardCommand(value), size, 'anticon anticon-backward')
+            new Button(tool_bar.backward, shape, new BackWardCommand(value), size, 'anticon anticon-backward'),
+            new Button(tool_bar.save, shape, new SaveCommand(value), size, 'anticon anticon-save'),
+            new Button(tool_bar.article_info, shape, new ArticleInfoCommand(value), size, 'anticon anticon-info')
           ];
         });
     } else {

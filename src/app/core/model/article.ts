@@ -1,6 +1,3 @@
-import { ArticleFile } from './article-file';
-import { ArticleContent } from './content';
-
 export enum ArticleStatus {
   post,
   draft
@@ -10,8 +7,9 @@ export class Article {
   private _id: number;
   private _title: string;
   private _status: ArticleStatus;
-  private _file: ArticleFile;
-  private _content: ArticleContent;
+  private _file: string;
+  private _createDate: Date;
+  private _content: string;
 
 
   get id(): number {
@@ -38,20 +36,27 @@ export class Article {
     this._status = value;
   }
 
+  get createDate(): Date {
+    return this._createDate;
+  }
 
-  get file(): ArticleFile {
+  set createDate(value: Date) {
+    this._createDate = value;
+  }
+
+  get file(): string {
     return this._file;
   }
 
-  set file(value: ArticleFile) {
+  set file(value: string) {
     this._file = value;
   }
 
-  get content(): ArticleContent {
+  get content(): string {
     return this._content;
   }
 
-  set content(value: ArticleContent) {
+  set content(value: string) {
     this._content = value;
   }
 }

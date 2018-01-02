@@ -19,7 +19,9 @@
   },
   "editor": {
     "tool_bar": {
-      "backward": "backward to home page"
+      "backward": "backward to home page",
+      "save": "save article locally",
+      "article_info": "modify article info"
     }
   }
 }

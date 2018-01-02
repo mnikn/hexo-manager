@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-article-preview',
@@ -7,9 +7,18 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PreviewComponent implements OnInit {
 
-  constructor() { }
+  @Input() rawContent: string;
+  @Output() outputContent: string;
+
+  constructor() {
+  }
 
   ngOnInit() {
+  }
+
+  public process(rawContent: string): string {
+    this.outputContent = rawContent;
+    return this.outputContent;
   }
 
 }
