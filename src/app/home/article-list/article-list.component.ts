@@ -2,7 +2,7 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article, ArticleStatus } from '../../core/model/article';
 import { ArticleCardComponent } from './article-card/article-card.component';
-import { ArticleDataService } from './article-data.service';
+import { ArticleDataService } from '../../core/service/article-data.service';
 
 @Component({
   selector: 'app-home-article-list',

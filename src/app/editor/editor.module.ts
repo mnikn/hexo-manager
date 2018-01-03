@@ -8,6 +8,7 @@ import { ComponentModule } from '../core/component/component.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { TranslateModule } from '@ngx-translate/core';
 import { SIMPLEMDE_CONFIG, SimplemdeModule } from 'ng2-simplemde';
+import { ArticleDataService } from '../core/service/article-data.service';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { SIMPLEMDE_CONFIG, SimplemdeModule } from 'ng2-simplemde';
       useValue: {}
     })
   ],
+  providers: [],
   declarations: [
     EditorComponent,
     ToolBarComponent]

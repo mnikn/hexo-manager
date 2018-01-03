@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Article } from '../../core/model/article';
+import { Article } from '../model/article';
 import { Observable } from 'rxjs/Observable';
 
 export enum SelectionMode {

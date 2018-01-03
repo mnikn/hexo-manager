@@ -1,7 +1,7 @@
 import
 { Component, Input, OnInit } from '@angular/core';
 import { Article } from '../../../core/model/article';
-import { ArticleDataService } from '../article-data.service';
+import { ArticleDataService } from '../../../core/service/article-data.service';
 
 @Component({
   selector: 'app-home-article-card',

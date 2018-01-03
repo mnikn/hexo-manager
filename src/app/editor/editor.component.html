@@ -4,6 +4,6 @@
     </app-editor-tool-bar>
   </nz-header>
   <nz-content style="margin-top: 1px;overflow: hidden">
-    <simplemde #editor></simplemde>
+    <simplemde #editor [ngModel]="article.content"></simplemde>
   </nz-content>
 </nz-layout>
