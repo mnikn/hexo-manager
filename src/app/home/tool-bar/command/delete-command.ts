@@ -6,6 +6,11 @@ export class DeleteCommand extends Command {
   }
 
   execute(): any {
-    console.log('delete');
+
+    this.user.dataService
+      .removeItem(this.user.dataService.getSelectedItem().id)
+      .subscribe(list => {
+        this.user.articles = list;
+      });
   }
 }

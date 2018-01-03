@@ -1,4 +1,5 @@
 import { Command } from '../../../core/component/button/command';
+import { ArticleStatus } from '../../../core/model/article';
 export class MoveToPostCommand extends Command {
 
   constructor(user?: any) {
@@ -6,6 +7,8 @@ export class MoveToPostCommand extends Command {
   }
 
   execute(): any {
-    console.log('move to post');
+    this.user.dataService.getSelectedList().forEach(e => {
+      e.status = ArticleStatus.post;
+    });
   }
 }

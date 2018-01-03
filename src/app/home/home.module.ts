@@ -10,6 +10,7 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { ComponentModule } from '../core/component/component.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ArticleCardComponent } from './article-list/article-card/article-card.component';
+import { ArticleDataService } from './article-list/article-data.service';
 
 @NgModule({
   imports: [
@@ -22,7 +23,7 @@ import { ArticleCardComponent } from './article-list/article-card/article-card.c
   exports: [
     HomeComponent
   ],
-  providers: [],
+  providers: [ArticleDataService],
   declarations: [
     HomeComponent,
     MenuComponent,

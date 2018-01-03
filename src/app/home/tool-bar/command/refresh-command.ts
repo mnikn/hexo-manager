@@ -6,6 +6,8 @@ export class RefreshCommand extends Command {
   }
 
   execute(): any {
-    console.log('refresh');
+    this.user.dataService.refresh().subscribe(list => {
+      this.user.articles = list;
+    });
   }
 }

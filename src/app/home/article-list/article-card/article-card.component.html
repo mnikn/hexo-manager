@@ -1,5 +1,5 @@
 <nz-card class="card"
-         [class.card-selected]="isSelected"
+         [class.card-selected]="dataService.isItemSelected(article.id)"
          style="border-radius: 10px;cursor: pointer">
   <ng-template #title>
     {{article.title}}

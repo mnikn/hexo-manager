@@ -6,6 +6,8 @@ export class AddCommand extends Command {
   }
 
   execute(): any {
-    console.log('add');
+    this.user.dataService.createItem().subscribe(list => {
+      this.user.articles = list;
+    });
   }
 }

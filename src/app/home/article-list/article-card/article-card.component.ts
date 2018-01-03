@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import
+{ Component, Input, OnInit } from '@angular/core';
 import { Article } from '../../../core/model/article';
+import { ArticleDataService } from '../article-data.service';
 
 @Component({
   selector: 'app-home-article-card',
@@ -9,9 +11,8 @@ import { Article } from '../../../core/model/article';
 export class ArticleCardComponent implements OnInit {
 
   @Input() public article: Article;
-  public isSelected: boolean;
 
-  constructor() {
+  constructor(public dataService: ArticleDataService) {
   }
 
   ngOnInit() {
