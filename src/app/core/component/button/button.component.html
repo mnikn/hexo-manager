@@ -1,5 +1,5 @@
 <nz-tooltip [nzTitle]="model.title" [nzPlacement]="model.hintPlacement">
-  <button nz-button
+  <button nz-button [disabled]="model.disabled"
           nz-tooltip
           [nzShape]="model.shape"
           [nzType]="model.type"

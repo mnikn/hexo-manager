@@ -6,7 +6,6 @@ export class DeleteCommand extends Command {
   }
 
   execute(): any {
-
     this.user.dataService
       .removeItem(this.user.dataService.getSelectedItem().id)
       .subscribe(list => {

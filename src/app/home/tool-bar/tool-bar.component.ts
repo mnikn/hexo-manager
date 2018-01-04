@@ -11,6 +11,7 @@ import { MoveToPostCommand } from './command/move-to-post';
 import { TranslateService } from '@ngx-translate/core';
 import { EditCommand } from './command/edit-command';
 import { ArticleStatus } from '../../core/model/article';
+import { ArticleDataService } from '../../core/service/article-data.service';
 
 @Component({
   selector: 'app-home-tool-bar',
@@ -20,15 +21,33 @@ import { ArticleStatus } from '../../core/model/article';
 export class ToolBarComponent implements OnInit {
 
   public currentButtons: Button[];
+
   private summaryButtons: Button[] = [];
   private postButtons: Button[] = [];
   private draftButtons: Button[] = [];
 
+  private refreshButton: Button;
+  private tagsButton: Button;
+  private addButton: Button;
+  private deleteButton: Button;
+  private deployButton: Button;
+  private moveToPostButton: Button;
+  private moveToDraftButton: Button;
+  private editButton: Button;
 
-  constructor(private translateService: TranslateService) {
+
+  constructor(private dataService: ArticleDataService,
+              private translateService: TranslateService) {
   }
 
   ngOnInit() {
+    let self = this;
+    this.dataService.registerOnSelectChange(selectedList => {
+      self.deleteButton.disabled = !self.dataService.hasSelected();
+      self.moveToDraftButton.disabled = !self.dataService.hasSelected();
+      self.moveToPostButton.disabled = !self.dataService.hasSelected();
+      self.editButton.disabled = !self.dataService.hasSelected();
+    });
   }
 
   @Input()
@@ -62,38 +81,42 @@ export class ToolBarComponent implements OnInit {
     const size = 'large';
     const shape = 'circle';
 
-    let refreshButton = new Button(tool_bar.refresh, shape, new RefreshCommand(), size, 'anticon anticon-reload');
-    let tagsButton = new Button(tool_bar.tags, shape, new TagsCommand(), size, 'anticon anticon-tags');
-    let addButton = new Button(tool_bar.add, shape, new AddCommand(), size, 'anticon anticon-plus');
-    let deleteButton = new Button(tool_bar.delete, shape, new DeleteCommand(), size, 'anticon anticon-minus');
-    let deployButton = new Button(tool_bar.deploy, shape, new DeployCommand(), size, 'anticon anticon-upload');
-    let moveToPostButton = new Button(tool_bar.move_to_post, shape, new MoveToPostCommand(), size, 'anticon anticon-swap');
-    let moveToDraftButton = new Button(tool_bar.move_to_draft, shape, new MoveToDraftCommand(), size, 'anticon anticon-swap');
-    let editButton = new Button(tool_bar.edit, shape, new EditCommand(), size, 'anticon anticon-edit');
+    this.refreshButton = new Button(tool_bar.refresh, shape, new RefreshCommand(), size, 'anticon anticon-reload');
+    this.tagsButton = new Button(tool_bar.tags, shape, new TagsCommand(), size, 'anticon anticon-tags');
+    this.addButton = new Button(tool_bar.add, shape, new AddCommand(), size, 'anticon anticon-plus');
+    this.deleteButton = new Button(tool_bar.delete, shape, new DeleteCommand(), size, 'anticon anticon-minus');
+    this.deployButton = new Button(tool_bar.deploy, shape, new DeployCommand(), size, 'anticon anticon-upload');
+    this.moveToPostButton = new Button(tool_bar.move_to_post, shape, new MoveToPostCommand(), size, 'anticon anticon-swap');
+    this.moveToDraftButton = new Button(tool_bar.move_to_draft, shape, new MoveToDraftCommand(), size, 'anticon anticon-swap');
+    this.editButton = new Button(tool_bar.edit, shape, new EditCommand(), size, 'anticon anticon-edit');
 
     this.summaryButtons = [
-      refreshButton,
-      tagsButton,
-      deployButton
+      this.refreshButton,
+      this.tagsButton,
+      this.deployButton
     ];
+    this.summaryButtons.forEach(e => e.command.container = e);
     this.postButtons = [
-      refreshButton,
-      tagsButton,
-      addButton,
-      deleteButton,
-      deployButton,
-      moveToDraftButton,
-      editButton
+      this.refreshButton,
+      this.tagsButton,
+      this.addButton,
+      this.deleteButton,
+      this.deployButton,
+      this.moveToDraftButton,
+      this.editButton
     ];
+    this.postButtons.forEach(e => e.command.container = e);
     this.draftButtons = [
-      refreshButton,
-      tagsButton,
-      addButton,
-      deleteButton,
-      deployButton,
-      moveToPostButton,
-      editButton
+      this.refreshButton,
+      this.tagsButton,
+      this.addButton,
+      this.deleteButton,
+      this.deployButton,
+      this.moveToPostButton,
+      this.editButton
     ];
+    this.draftButtons.forEach(e => e.command.container = e);
+    this.dataService.fireOnSelectChange();
   }
 
 }

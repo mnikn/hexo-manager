@@ -12,6 +12,7 @@ export class ArticleDataService {
   private _list: Article[];
   private _selectionMode: SelectionMode;
   private _selectedIds: Set<number>;
+  private _onSelectChange: (selectedList: Article[]) => void;
 
   constructor() {
     this._list = [];
@@ -59,6 +60,7 @@ export class ArticleDataService {
 
   public setSelectionMode(mode: SelectionMode): void {
     this._selectionMode = mode;
+    this._onSelectChange(this.getSelectedList());
   }
 
   public selectItem(id: number): void {
@@ -74,19 +76,26 @@ export class ArticleDataService {
         break;
     }
     this._selectedIds.add(id);
+    this._onSelectChange(this.getSelectedList());
   }
 
   public diselectItem(id: number): void {
     this._selectedIds.delete(id);
+    this._onSelectChange(this.getSelectedList());
   }
 
   public diselectItems(ids: number[]): void {
     ids.forEach(id => this.diselectItem(id));
+    this._onSelectChange(this.getSelectedList());
   }
 
   public getSelectedItem(): Article {
     let id = this._selectedIds.values().next().value;
     return this.getItem(id);
+  }
+
+  public hasSelected(): boolean {
+    return this._selectedIds.size !== 0;
   }
 
   public getSelectedList(): Article[] {
@@ -95,6 +104,14 @@ export class ArticleDataService {
 
   public isItemSelected(id: number): boolean {
     return this._selectedIds.has(id);
+  }
+
+  public registerOnSelectChange(callback: (selectedList: Article[]) => void): void {
+    this._onSelectChange = callback;
+  }
+
+  public fireOnSelectChange(): void {
+    this._onSelectChange(this.getSelectedList());
   }
 
   private createFakeData(): Article[] {
