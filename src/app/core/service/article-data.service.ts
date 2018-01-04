@@ -50,6 +50,14 @@ export class ArticleDataService {
     });
   }
 
+  public removeList(ids: number[]): Observable<Article[]> {
+    let self = this;
+    return Observable.create(function (observer) {
+      self._list = self._list.filter(e => !ids.includes(e.id));
+      observer.next(self._list);
+    });
+  }
+
   public refresh(): Observable<Article[]> {
     let self = this;
     return Observable.create(function (observer) {
@@ -58,8 +66,12 @@ export class ArticleDataService {
     });
   }
 
-  public setSelectionMode(mode: SelectionMode): void {
-    this._selectionMode = mode;
+  public getSelectionMode(): SelectionMode {
+    return this._selectionMode;
+  }
+
+  public changeSelectionMode(): void {
+    this._selectionMode = this._selectionMode === SelectionMode.single ? SelectionMode.multi : SelectionMode.single;
     this._onSelectChange(this.getSelectedList());
   }
 
@@ -84,8 +96,8 @@ export class ArticleDataService {
     this._onSelectChange(this.getSelectedList());
   }
 
-  public diselectItems(ids: number[]): void {
-    ids.forEach(id => this.diselectItem(id));
+  public diselect(): void {
+    this._selectedIds.clear();
     this._onSelectChange(this.getSelectedList());
   }
 

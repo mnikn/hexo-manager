@@ -10,11 +10,12 @@ import { ArticleListComponent } from './article-list/article-list.component';
 import { ComponentModule } from '../core/component/component.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ArticleCardComponent } from './article-list/article-card/article-card.component';
-import { ArticleDataService } from '../core/service/article-data.service';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     NgZorroAntdModule,
     TranslateModule,
     HomeRoutingModule,

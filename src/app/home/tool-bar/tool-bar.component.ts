@@ -11,7 +11,7 @@ import { MoveToPostCommand } from './command/move-to-post';
 import { TranslateService } from '@ngx-translate/core';
 import { EditCommand } from './command/edit-command';
 import { ArticleStatus } from '../../core/model/article';
-import { ArticleDataService } from '../../core/service/article-data.service';
+import { ArticleDataService, SelectionMode } from '../../core/service/article-data.service';
 
 @Component({
   selector: 'app-home-tool-bar',
@@ -43,10 +43,13 @@ export class ToolBarComponent implements OnInit {
   ngOnInit() {
     let self = this;
     this.dataService.registerOnSelectChange(selectedList => {
+      self.addButton.disabled = self.dataService.getSelectedList().length > 1;
+      self.deployButton.disabled = self.dataService.getSelectedList().length > 1;
       self.deleteButton.disabled = !self.dataService.hasSelected();
       self.moveToDraftButton.disabled = !self.dataService.hasSelected();
       self.moveToPostButton.disabled = !self.dataService.hasSelected();
-      self.editButton.disabled = !self.dataService.hasSelected();
+      self.editButton.disabled = !self.dataService.hasSelected() ||
+        self.dataService.getSelectedList().length > 1;
     });
   }
 

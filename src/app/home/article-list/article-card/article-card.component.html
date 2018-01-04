@@ -1,11 +1,18 @@
 <nz-card class="card"
-         [class.card-selected]="dataService.isItemSelected(article.id)"
+         [class.card-selected]="dataService.isItemSelected(article.id) && dataService.getSelectionMode() === 0"
+         (mousedown)="onMouseDown()"
+         (mouseup)="onMouseUp()"
          style="border-radius: 10px;cursor: pointer">
   <ng-template #title>
     {{article.title}}
   </ng-template>
   <ng-template #extra>
-    <p>{{article.createDate | date: 'yyyy/MM/dd'}}</p>
+    <div>{{article.createDate | date: 'yyyy/MM/dd'}}
+      <label nz-checkbox
+             *ngIf="dataService.getSelectionMode() === 1"
+             [ngModel]="dataService.isItemSelected(this.article.id)">
+      </label>
+    </div>
   </ng-template>
   <ng-template #body>
     <div nz-row [nzGutter]="8">

@@ -2,7 +2,7 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article, ArticleStatus } from '../../core/model/article';
 import { ArticleCardComponent } from './article-card/article-card.component';
-import { ArticleDataService } from '../../core/service/article-data.service';
+import { ArticleDataService, SelectionMode } from '../../core/service/article-data.service';
 
 @Component({
   selector: 'app-home-article-list',
@@ -42,6 +42,19 @@ export class ArticleListComponent implements OnInit {
   }
 
   public onCardClick(article: Article): void {
+    let event = window.event;
+    event.stopPropagation();
+
+    if (this.dataService.getSelectionMode() === SelectionMode.multi) {
+      if (this.dataService.isItemSelected(article.id)){
+        this.dataService.diselectItem(article.id);
+      } else {
+        this.dataService.selectItem(article.id);
+      }
+      this.previewArticle = null;
+      return;
+    }
+
     if (this.previewArticle && this.previewArticle.id === article.id) {
       this.dataService.diselectItem(article.id);
       this.previewArticle = null;
@@ -50,6 +63,13 @@ export class ArticleListComponent implements OnInit {
 
     this.dataService.selectItem(article.id);
     this.previewArticle = article;
+  }
+
+  public onOutSideClick(): void {
+    if (this.dataService.getSelectionMode() === SelectionMode.multi) {
+      this.dataService.diselect();
+      this.dataService.changeSelectionMode();
+    }
   }
 
 }
