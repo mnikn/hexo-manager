@@ -1,23 +1,21 @@
 import { Injectable } from '@angular/core';
 import { Article } from '../model/article';
 import { Observable } from 'rxjs/Observable';
-
-export enum SelectionMode {
-  single, multi
-}
+import { SingleSelection } from './selection/single-selection';
+import { Selection, SelectionMode } from './selection/selection';
+import { MultiSelection } from './selection/multi-selection';
+import * as _ from 'lodash';
 
 @Injectable()
 export class ArticleDataService {
 
   private _list: Article[];
-  private _selectionMode: SelectionMode;
-  private _selectedIds: Set<number>;
-  private _onSelectChange: (selectedList: Article[]) => void;
+  private _selection: Selection;
+  private _onSelectChange: (item) => void;
 
   constructor() {
     this._list = [];
-    this._selectedIds = new Set();
-    this._selectionMode = SelectionMode.single;
+    this._selection = new SingleSelection();
   }
 
   public getItem(id: number): Article {
@@ -41,21 +39,8 @@ export class ArticleDataService {
     });
   }
 
-  public removeItem(id: number): Observable<Article[]> {
-    let self = this;
-    return Observable.create(function (observer) {
-      let index = self._list.findIndex(e => e.id === id);
-      self._list.splice(index, 1);
-      observer.next(self._list);
-    });
-  }
-
-  public removeList(ids: number[]): Observable<Article[]> {
-    let self = this;
-    return Observable.create(function (observer) {
-      self._list = self._list.filter(e => !ids.includes(e.id));
-      observer.next(self._list);
-    });
+  public removeSelected(): Observable<Article[]> {
+    return this._selection.removeSelected(this._list);
   }
 
   public refresh(): Observable<Article[]> {
@@ -67,63 +52,38 @@ export class ArticleDataService {
   }
 
   public getSelectionMode(): SelectionMode {
-    return this._selectionMode;
+    return this._selection.getSelectionMode();
   }
 
   public changeSelectionMode(): void {
-    this._selectionMode = this._selectionMode === SelectionMode.single ? SelectionMode.multi : SelectionMode.single;
-    this._onSelectChange(this.getSelectedList());
+    this._selection = this._selection instanceof SingleSelection ? new MultiSelection() : new SingleSelection();
+    this._selection.registerOnSelectChange(this._onSelectChange);
+    this._selection.fireOnSelectChange();
   }
 
-  public selectItem(id: number): void {
-    if (this.isItemSelected(id)) {
-      return;
-    }
-
-    switch (this._selectionMode) {
-      case SelectionMode.single:
-        this._selectedIds.clear();
-        break;
-      case SelectionMode.multi:
-        break;
-    }
-    this._selectedIds.add(id);
-    this._onSelectChange(this.getSelectedList());
+  public setSelected(id: any): void {
+    this._selection.setSelected(_.isArray(id) ? this._list.filter(e => id.includes(e.id)) : this.getItem(id));
   }
 
-  public diselectItem(id: number): void {
-    this._selectedIds.delete(id);
-    this._onSelectChange(this.getSelectedList());
-  }
-
-  public diselect(): void {
-    this._selectedIds.clear();
-    this._onSelectChange(this.getSelectedList());
-  }
-
-  public getSelectedItem(): Article {
-    let id = this._selectedIds.values().next().value;
-    return this.getItem(id);
+  public diselect(id?: any): void {
+    this._selection.diselect(id);
   }
 
   public hasSelected(): boolean {
-    return this._selectedIds.size !== 0;
+    return this._selection.hasSelected();
   }
 
-  public getSelectedList(): Article[] {
-    return this._list.filter(e => this._selectedIds.has(e.id));
+  public getSelected(): any {
+    return this._selection.getSelected();
   }
 
-  public isItemSelected(id: number): boolean {
-    return this._selectedIds.has(id);
+  public isSelected(id: number): boolean {
+    return this._selection.isSelected(id);
   }
 
-  public registerOnSelectChange(callback: (selectedList: Article[]) => void): void {
+  public registerOnSelectChange(callback: (item) => void): void {
     this._onSelectChange = callback;
-  }
-
-  public fireOnSelectChange(): void {
-    this._onSelectChange(this.getSelectedList());
+    this._selection.registerOnSelectChange(callback);
   }
 
   private createFakeData(): Article[] {
@@ -138,6 +98,10 @@ export class ArticleDataService {
     articles.forEach(e => e.createDate = new Date());
     articles.forEach(e => e.tags = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5']);
     return articles;
+  }
+
+  public fireOnSelectChange(): void {
+    this._selection.fireOnSelectChange();
   }
 
 

@@ -1,9 +1,7 @@
-import
-{
-  Component, Input, OnInit
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Article } from '../../../core/model/article';
-import { ArticleDataService, SelectionMode } from '../../../core/service/article-data.service';
+import { ArticleDataService } from '../../../core/service/article-data.service';
+import { SelectionMode } from '../../../core/service/selection/selection';
 
 @Component({
   selector: 'app-home-article-card',
@@ -24,7 +22,7 @@ export class ArticleCardComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.isSelected = this.dataService.isItemSelected(this.article.id);
+    this.isSelected = this.dataService.isSelected(this.article.id);
   }
 
   public onTagClick(tag: string): void {

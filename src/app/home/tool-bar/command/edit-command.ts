@@ -6,6 +6,6 @@ export class EditCommand extends Command {
   }
 
   execute(): any {
-    this.user.router.navigate(['/editor', this.user.dataService.getSelectedItem().id]);
+    this.user.router.navigate(['/editor', this.user.dataService.getSelected().id]);
   }
 }

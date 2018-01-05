@@ -2,7 +2,8 @@ import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article, ArticleStatus } from '../../core/model/article';
 import { ArticleCardComponent } from './article-card/article-card.component';
-import { ArticleDataService, SelectionMode } from '../../core/service/article-data.service';
+import { ArticleDataService } from '../../core/service/article-data.service';
+import { SelectionMode } from "../../core/service/selection/selection";
 
 @Component({
   selector: 'app-home-article-list',
@@ -46,22 +47,22 @@ export class ArticleListComponent implements OnInit {
     event.stopPropagation();
 
     if (this.dataService.getSelectionMode() === SelectionMode.multi) {
-      if (this.dataService.isItemSelected(article.id)){
-        this.dataService.diselectItem(article.id);
+      if (this.dataService.isSelected(article.id)) {
+        this.dataService.diselect(article.id);
       } else {
-        this.dataService.selectItem(article.id);
+        this.dataService.setSelected(article.id);
       }
       this.previewArticle = null;
       return;
     }
 
     if (this.previewArticle && this.previewArticle.id === article.id) {
-      this.dataService.diselectItem(article.id);
+      this.dataService.diselect(article.id);
       this.previewArticle = null;
       return;
     }
 
-    this.dataService.selectItem(article.id);
+    this.dataService.setSelected(article.id);
     this.previewArticle = article;
   }
 

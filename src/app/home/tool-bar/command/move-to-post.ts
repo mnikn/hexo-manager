@@ -1,5 +1,7 @@
 import { Command } from '../../../core/component/button/command';
 import { ArticleStatus } from '../../../core/model/article';
+import * as _ from 'lodash';
+
 export class MoveToPostCommand extends Command {
 
   constructor(user?: any) {
@@ -7,8 +9,11 @@ export class MoveToPostCommand extends Command {
   }
 
   execute(): any {
-    this.user.dataService.getSelectedList().forEach(e => {
-      e.status = ArticleStatus.post;
-    });
+    let selected = this.user.dataService.getSelected();
+    if (_.isArray(selected)) {
+      selected.forEach(e => e.status = ArticleStatus.post);
+    } else {
+      selected.status = ArticleStatus.post;
+    }
   }
 }

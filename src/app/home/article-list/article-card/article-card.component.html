@@ -1,5 +1,5 @@
 <nz-card class="card"
-         [class.card-selected]="dataService.isItemSelected(article.id) && dataService.getSelectionMode() === 0"
+         [class.card-selected]="dataService.isSelected(article.id) && dataService.getSelectionMode() === 0"
          (mousedown)="onMouseDown()"
          (mouseup)="onMouseUp()"
          style="border-radius: 10px;cursor: pointer">
@@ -10,7 +10,7 @@
     <div>{{article.createDate | date: 'yyyy/MM/dd'}}
       <label nz-checkbox
              *ngIf="dataService.getSelectionMode() === 1"
-             [ngModel]="dataService.isItemSelected(this.article.id)">
+             [ngModel]="dataService.isSelected(this.article.id)">
       </label>
     </div>
   </ng-template>
