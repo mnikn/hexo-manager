@@ -30,7 +30,7 @@ export class MultiSelection implements Selection {
   }
 
   diselect(id?: any): void {
-    if (id) {
+    if (!_.isUndefined(id)) {
       if (_.isArray(id)) {
         let ids = id;
         _.remove(this._selectedList, e => ids.includes(e.id));

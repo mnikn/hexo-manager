@@ -62,13 +62,14 @@ export class ArticleListComponent implements OnInit {
       return;
     }
 
-    this.dataService.setSelected(article.id);
+    this.dataService.setSelected(article);
     this.previewArticle = article;
   }
 
   public onOutSideClick(): void {
+    this.dataService.diselect();
+    this.previewArticle = null;
     if (this.dataService.getSelectionMode() === SelectionMode.multi) {
-      this.dataService.diselect();
       this.dataService.changeSelectionMode();
     }
   }
