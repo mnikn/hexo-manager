@@ -1,4 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Global } from '../../../../global';
+import { ArticleDataService } from '../../../../core/service/article-data.service';
 declare let electron: any;
 
 @Component({
@@ -10,7 +12,7 @@ export class NormalTabComponent implements OnInit {
 
   @Output() isProcessing: EventEmitter<boolean> = new EventEmitter();
 
-  constructor() {
+  constructor(private global: Global, private dataService: ArticleDataService) {
   }
 
   ngOnInit() {
@@ -24,6 +26,7 @@ export class NormalTabComponent implements OnInit {
       postDir: blogDir + '/source/_posts/',
       draftDir: blogDir + '/source/_drafts/'
     };
+    this.global.hexoDir = dirs;
     let fs = electron.remote.require('fs');
     this.isProcessing.emit(true);
     fs.writeFile('./dist/config.json', JSON.stringify(dirs), 'utf8', (err) => {

@@ -1,10 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Article } from '../model/article';
+import { Inject, Injectable } from '@angular/core';
+import { Article, ArticleStatus } from '../model/article';
 import { Observable } from 'rxjs/Observable';
 import { SingleSelection } from './selection/single-selection';
 import { Selection, SelectionMode } from './selection/selection';
 import { MultiSelection } from './selection/multi-selection';
 import * as _ from 'lodash';
+import { FileReader } from './file-reader/file-reader';
+import { MarkdownFileReader } from './file-reader/markdown-file-reader';
+import { Global } from '../../global';
 
 @Injectable()
 export class ArticleDataService {
@@ -12,10 +15,14 @@ export class ArticleDataService {
   private _list: Article[];
   private _selection: Selection;
   private _onSelectChange: (item) => void;
+  private _fileReader: FileReader<Article>;
+  private _hasLoadFile: boolean;
 
-  constructor() {
+  constructor(private global: Global) {
     this._list = [];
     this._selection = new SingleSelection();
+    this._fileReader = new MarkdownFileReader();
+    this._hasLoadFile = false;
   }
 
   public getItem(id: number): Article {
@@ -46,9 +53,22 @@ export class ArticleDataService {
   public refresh(): Observable<Article[]> {
     let self = this;
     return Observable.create(function (observer) {
-      self._list = self.createFakeData();
+      if (!self.global.hexoDir) {
+        return;
+      }
+
+      let postList = self._fileReader.readDirectorySync(self.global.hexoDir.postDir);
+      postList.forEach(e => e.status = ArticleStatus.post);
+      let draftList = self._fileReader.readDirectorySync(self.global.hexoDir.draftDir);
+      draftList.forEach(e => e.status = ArticleStatus.draft);
+      self._list = postList.concat(draftList);
+      self._hasLoadFile = true;
       observer.next(self._list);
     });
+  }
+
+  public hasLoadFile(): boolean {
+    return this._hasLoadFile;
   }
 
   public getSelectionMode(): SelectionMode {

@@ -35,11 +35,15 @@ export class ArticleListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dataService
-      .refresh()
-      .subscribe(list => {
-        this.articles = list;
-      });
+    if (!this.dataService.hasLoadFile()) {
+      this.dataService
+        .refresh()
+        .subscribe(list => {
+          this.articles = list;
+        });
+    } else {
+      this.articles = this.dataService.getList();
+    }
   }
 
   public onCardClick(article: Article): void {
@@ -62,7 +66,7 @@ export class ArticleListComponent implements OnInit {
       return;
     }
 
-    this.dataService.setSelected(article);
+    this.dataService.setSelected(article.id);
     this.previewArticle = article;
   }
 
