@@ -1,4 +1,8 @@
 {
+  "common": {
+    "ok": "ok",
+    "cancel": "cancel"
+  },
   "home": {
     "tool_bar": {
       "refresh": "refresh articles",
@@ -12,6 +16,16 @@
       "search_hint": "input search article name or tag..."
     },
     "menu": {
+      "settings": {
+        "title": "App settings",
+        "normal": {
+          "title": "normal",
+          "set_hexo_dir": "set local hexo blog directory"
+        },
+        "performance": {
+          "title": "performance"
+        }
+      },
       "summary": "Summary",
       "post_box": "Post box",
       "draft_box": "Draft box"

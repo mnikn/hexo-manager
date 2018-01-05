@@ -1,6 +1,10 @@
 .fold-button {
   margin-bottom: 10px;
 }
+.settings-button {
+  position: fixed;
+  bottom: 10px;
+}
 li {
   outline: none;
 }

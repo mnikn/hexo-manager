@@ -1,4 +1,8 @@
 {
+  "common": {
+    "ok": "确认",
+    "cancel": "取消"
+  },
   "home": {
     "tool_bar": {
       "refresh": "刷新文章",
@@ -12,6 +16,16 @@
       "search_hint": "输入要查找的文章名字或标签..."
     },
     "menu": {
+      "settings": {
+        "title": "应用设置",
+        "normal": {
+          "title": "常规",
+          "set_hexo_dir": "设定本地hexo博客目录"
+        },
+        "performance": {
+          "title": "偏好"
+        }
+      },
       "summary": "概况",
       "post_box": "发表箱",
       "draft_box": "草稿箱"

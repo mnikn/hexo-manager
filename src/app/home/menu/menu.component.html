@@ -3,12 +3,11 @@
     nzTheme='dark'
     [nzInlineCollapsed]="isCollapsed"
     style="height: 100%;width: 100%">
-  <button
-    class="fold-button"
-    nz-button
-    [nzType]="'default'"
-    [style.margin-left]="isCollapsed? '17px' : '85px'"
-    (click)="toggleCollapsed()">
+  <button class="fold-button"
+          nz-button
+          [nzType]="'default'"
+          [style.margin-left]="isCollapsed? '17px' : '85px'"
+          (click)="toggleCollapsed()">
 
     <i class="anticon anticon-menu-fold"
        [class.anticon-menu-unfold]="isCollapsed"
@@ -33,4 +32,13 @@
             <span>{{'home.menu.draft_box' | translate}}</span>
           </span>
   </li>
+
+  <button class="settings-button"
+          nz-button
+          [nzType]="'default'"
+          [style.margin-left]="isCollapsed? '17px' : '85px'"
+          (click)="showSettingsModal()">
+    <i class="anticon anticon-setting"></i>
+  </button>
+  <app-menu-settings></app-menu-settings>
 </ul>

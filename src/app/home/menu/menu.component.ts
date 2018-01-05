@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { SettingsComponent } from './settings/settings.component';
 
 @Component({
   selector: 'app-home-menu',
@@ -7,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MenuComponent implements OnInit {
 
+  @ViewChild(SettingsComponent) settingsModal: SettingsComponent;
   public isCollapsed: boolean;
+
 
   constructor() {
   }
@@ -17,6 +20,10 @@ export class MenuComponent implements OnInit {
 
   public toggleCollapsed(): void {
     this.isCollapsed = !this.isCollapsed;
+  }
+
+  public showSettingsModal(): void {
+    this.settingsModal.isVisible = true;
   }
 
 }

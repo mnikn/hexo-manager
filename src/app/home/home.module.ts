@@ -11,6 +11,9 @@ import { ComponentModule } from '../core/component/component.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ArticleCardComponent } from './article-list/article-card/article-card.component';
 import { FormsModule } from '@angular/forms';
+import { SettingsComponent } from './menu/settings/settings.component';
+import { NormalTabComponent } from './menu/settings/normal-tab/normal-tab.component';
+import { PerformanceTabComponent } from './menu/settings/performance-tab/performance-tab.component';
 
 @NgModule({
   imports: [
@@ -31,7 +34,10 @@ import { FormsModule } from '@angular/forms';
     SummaryComponent,
     ToolBarComponent,
     ArticleListComponent,
-    ArticleCardComponent]
+    ArticleCardComponent,
+    SettingsComponent,
+    NormalTabComponent,
+    PerformanceTabComponent]
 })
 export class HomeModule {
 }
