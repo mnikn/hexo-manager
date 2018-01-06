@@ -6,8 +6,12 @@ export class RefreshCommand extends Command {
   }
 
   execute(): any {
-    this.user.dataService.refresh().subscribe(list => {
-      this.user.articles = list;
+    let self = this;
+    this.user.previewArticle = null;
+    this.user.dataService.refresh().subscribe(() => {
+      self.user.dataService.getList(self.user.listInfo).subscribe(list => {
+        self.user.articles = list;
+      });
     });
   }
 }

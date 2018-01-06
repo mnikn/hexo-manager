@@ -27,6 +27,7 @@ export class ArticleDataService {
   private _hasLoadFile: boolean;
   private _previewCache: Map<number, string>;
   private _parser: MarkdownParser;
+  private _isRefreshing: boolean;
 
   constructor(private global: Global) {
     this._list = [];
@@ -35,6 +36,7 @@ export class ArticleDataService {
     this._hasLoadFile = false;
     this._previewCache = new Map();
     this._parser = new MarkdownParser();
+    this._isRefreshing = false;
   }
 
   public getPreviewContent(id: number): string {
@@ -51,15 +53,18 @@ export class ArticleDataService {
     return this._list[index];
   }
 
-  public getList(info?: ArticleListInfo): Article[] {
-    let processor: ListProcessor = new ListProcessorBase(this._list, info);
-    processor = new PostList(processor);
-    processor = new DraftList(processor);
-    processor = new NameSortList(processor);
-    processor = new DateSortList(processor);
-    processor = new FilterTagList(processor);
-    processor = new FilterTitleList(processor);
-    return processor.getList();
+  public getList(info?: ArticleListInfo): Observable<Article[]> {
+    let self = this;
+    return Observable.create(function (observer) {
+      let processor: ListProcessor = new ListProcessorBase(self._list, info);
+      processor = new PostList(processor);
+      processor = new DraftList(processor);
+      processor = new NameSortList(processor);
+      processor = new DateSortList(processor);
+      processor = new FilterTagList(processor);
+      processor = new FilterTitleList(processor);
+      observer.next(processor.getList());
+    });
   }
 
   public createItem(): Observable<Article[]> {
@@ -80,6 +85,7 @@ export class ArticleDataService {
 
   public refresh(): Observable<Article[]> {
     let self = this;
+    this._isRefreshing = true;
     return Observable.create(function (observer) {
       if (!self.global.hexoDir) {
         return;
@@ -91,8 +97,15 @@ export class ArticleDataService {
       draftList.forEach(e => e.status = ArticleStatus.draft);
       self._list = postList.concat(draftList);
       self._hasLoadFile = true;
-      observer.next(self._list);
+      setTimeout(() => {
+        self._isRefreshing = false;
+      }, 500);
+      observer.next();
     });
+  }
+
+  public isRefreshing(): boolean {
+    return this._isRefreshing;
   }
 
   public hasLoadFile(): boolean {

@@ -1,4 +1,4 @@
-import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article, ArticleStatus } from '../../core/model/article';
 import { ArticleCardComponent } from './article-card/article-card.component';
@@ -12,8 +12,7 @@ import * as _ from 'lodash';
   templateUrl: './article-list.component.html',
   styleUrls: ['./article-list.component.css']
 })
-export class ArticleListComponent implements OnInit {
-
+export class ArticleListComponent implements OnInit, AfterViewInit {
 
   @ViewChildren(ArticleCardComponent)
   cards: QueryList<ArticleCardComponent>;
@@ -42,15 +41,25 @@ export class ArticleListComponent implements OnInit {
     this.refresh();
   }
 
+  ngAfterViewInit(): void {
+    this.cards.changes.subscribe(() => this.updateTagState());
+  }
+
   public refresh(): void {
+    this.previewArticle = null;
     if (!this.dataService.hasLoadFile()) {
+      let self = this;
       this.dataService
         .refresh()
-        .subscribe(list => {
-          this.articles = this.dataService.getList(this.listInfo);
+        .subscribe(() => {
+          self.dataService.getList(self.listInfo).subscribe(list => {
+            self.articles = list;
+          });
         });
     } else {
-      this.articles = this.dataService.getList(this.listInfo);
+      this.dataService.getList(this.listInfo).subscribe(list => {
+        this.articles = list;
+      });
     }
   }
 
@@ -79,23 +88,18 @@ export class ArticleListComponent implements OnInit {
   }
 
   public onTagClick(tag: string): void {
-    if (_.isNil(this.listInfo.filterTags)) {
+    let filterTags = this.listInfo.filterTags;
+    if (_.isNil(filterTags)) {
       this.listInfo.filterTags = [];
     }
-    if (!this.listInfo.filterTags.includes(tag)) {
-      this.listInfo.filterTags.push(tag);
+    if (!filterTags.includes(tag)) {
+      filterTags.push(tag);
     } else {
-      this.listInfo.filterTags = this.listInfo.filterTags.filter(e => e !== tag);
-      if (_.isEmpty(this.listInfo.filterTags)) {
+      this.listInfo.filterTags = filterTags.filter(e => e !== tag);
+      if (_.isEmpty(filterTags)) {
         this.listInfo.filterTags = null;
       }
     }
-
-    let filterTags = this.listInfo.filterTags;
-    this.cards.forEach(e => e.buttons.forEach(b => {
-      let buttonTag = b.nativeElement.innerText;
-      b.nzType = filterTags && filterTags.includes(buttonTag) ? 'dashed' : 'primary';
-    }));
     this.refresh();
   }
 
@@ -105,6 +109,14 @@ export class ArticleListComponent implements OnInit {
     if (this.dataService.getSelectionMode() === SelectionMode.multi) {
       this.dataService.changeSelectionMode();
     }
+  }
+
+  private updateTagState(): void {
+    let filterTags = this.listInfo.filterTags;
+    this.cards.forEach(e => e.buttons.forEach(b => {
+      let buttonTag = b.nativeElement.innerText;
+      b.nzType = filterTags && filterTags.includes(buttonTag) ? 'dashed' : 'primary';
+    }));
   }
 
 }

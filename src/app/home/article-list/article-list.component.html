@@ -2,25 +2,27 @@
      [nzGutter]="1"
      style="height: 100%;overflow: hidden">
   <div nz-col [nzSpan]="previewArticle? 12 : 24">
-    <div class="scrollable-content"
-         (click)="onOutSideClick()"
-         [style.height]="contentHeight + 'px'">
-      <div style="padding:30px;">
-        <div nz-row
-             [nzGutter]="8"
-             style="margin-left: 10px;">
-          <div nz-col
-               [nzSpan]="previewArticle? 12 : 8"
-               style="margin-bottom: 8px"
-               *ngFor="let article of articles">
-            <app-home-article-card [article]="article"
-                                   (tagClick)="onTagClick($event)"
-                                   (click)="onCardClick(article)">
-            </app-home-article-card>
+    <nz-spin [nzSpinning]="dataService.isRefreshing()" [nzSize]="'large'">
+      <div class="scrollable-content"
+           (click)="onOutSideClick()"
+           [style.height]="contentHeight + 'px'">
+        <div style="padding:30px;">
+          <div nz-row
+               [nzGutter]="8"
+               style="margin-left: 10px;">
+            <div nz-col
+                 [nzSpan]="previewArticle? 12 : 8"
+                 style="margin-bottom: 8px"
+                 *ngFor="let article of articles">
+              <app-home-article-card [article]="article"
+                                     (tagClick)="onTagClick($event)"
+                                     (click)="onCardClick(article)">
+              </app-home-article-card>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </nz-spin>
   </div>
   <div nz-col [nzSpan]="12" *ngIf="previewArticle">
     <div class="scrollable-content"
