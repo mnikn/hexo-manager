@@ -45,6 +45,7 @@
       "backward": "backward to home page",
       "save": "save article locally",
       "article_info": "modify article info"
-    }
+    },
+    "placeholder": "write article with markdown..."
   }
 }

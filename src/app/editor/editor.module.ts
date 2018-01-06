@@ -8,7 +8,6 @@ import { ComponentModule } from '../core/component/component.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { TranslateModule } from '@ngx-translate/core';
 import { SIMPLEMDE_CONFIG, SimplemdeModule } from 'ng2-simplemde';
-import { ArticleDataService } from '../core/service/article-data.service';
 
 @NgModule({
   imports: [
@@ -20,7 +19,13 @@ import { ArticleDataService } from '../core/service/article-data.service';
     TranslateModule,
     SimplemdeModule.forRoot({
       provide: SIMPLEMDE_CONFIG,
-      useValue: {}
+      useValue: {
+        placeholder: '用Markdown开始写作...',
+        renderingConfig: {
+          codeSyntaxHighlighting: true
+        },
+        tabSize: 4
+      }
     })
   ],
   providers: [],

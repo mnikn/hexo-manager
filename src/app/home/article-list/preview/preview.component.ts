@@ -8,12 +8,19 @@ import { ArticleDataService } from '../../../core/service/article-data.service';
 })
 export class PreviewComponent implements OnInit {
 
-  @Input() previewArticleId: number;
+  public previewContent: string;
 
   constructor(public dataService: ArticleDataService) {
   }
 
   ngOnInit() {
+  }
+
+  @Input()
+  set previewArticleId(id: number) {
+    this.dataService.getPreviewContent(id).subscribe(content => {
+      this.previewContent = content;
+    });
   }
 
 }

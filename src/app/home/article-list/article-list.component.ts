@@ -94,15 +94,14 @@ export class ArticleListComponent implements OnInit, AfterViewInit {
   }
 
   public onTagClick(tag: string): void {
-    let filterTags = this.listInfo.filterTags;
-    if (_.isNil(filterTags)) {
+    if (_.isNil(this.listInfo.filterTags)) {
       this.listInfo.filterTags = [];
     }
-    if (!filterTags.includes(tag)) {
-      filterTags.push(tag);
+    if (!this.listInfo.filterTags.includes(tag)) {
+      this.listInfo.filterTags.push(tag);
     } else {
-      this.listInfo.filterTags = filterTags.filter(e => e !== tag);
-      if (_.isEmpty(filterTags)) {
+      this.listInfo.filterTags = this.listInfo.filterTags.filter(e => e !== tag);
+      if (_.isEmpty(this.listInfo.filterTags)) {
         this.listInfo.filterTags = null;
       }
     }

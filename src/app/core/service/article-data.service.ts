@@ -39,13 +39,16 @@ export class ArticleDataService {
     this._isRefreshing = false;
   }
 
-  public getPreviewContent(id: number): string {
-    if (this._previewCache.has(id)) {
-      return this._previewCache.get(id);
-    }
+  public getPreviewContent(id: number): Observable<string> {
+    return Observable.create((observer) => {
+      if (this._previewCache.has(id)) {
+        observer.next(this._previewCache.get(id));
+        return;
+      }
 
-    this._previewCache[id] = this._parser.parse(this.getItem(id).content);
-    return this._previewCache[id];
+      this._previewCache[id] = this._parser.parse(this.getItem(id).content);
+      observer.next(this._previewCache[id]);
+    });
   }
 
   public getItem(id: number): Article {

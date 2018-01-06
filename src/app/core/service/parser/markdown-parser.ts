@@ -1,6 +1,8 @@
 import { SyntaxParser } from './syntax-parser';
 import * as marked from 'marked';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
+declare let electron: any;
 
 @Injectable()
 export class MarkdownParser implements SyntaxParser<string> {
@@ -14,7 +16,10 @@ export class MarkdownParser implements SyntaxParser<string> {
       pedantic: false,
       sanitize: false,
       smartLists: true,
-      smartypants: false
+      smartypants: false,
+      highlight: function (code) {
+        return electron.remote.require('highlight.js').highlightAuto(code).value;
+      }
     });
   }
 

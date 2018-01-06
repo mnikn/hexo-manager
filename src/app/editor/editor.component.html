@@ -3,7 +3,7 @@
     <app-editor-tool-bar [user]="this">
     </app-editor-tool-bar>
   </nz-header>
-  <nz-content style="margin-top: 1px;overflow: hidden">
+  <nz-content style="margin-top: 1px;overflow: scroll">
     <simplemde #editor [ngModel]="article.content"></simplemde>
   </nz-content>
 </nz-layout>

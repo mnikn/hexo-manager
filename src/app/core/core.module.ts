@@ -4,7 +4,7 @@ import { ArticleDataService } from './service/article-data.service';
 
 @NgModule({
   imports: [
-    CommonModule
+    CommonModule,
   ],
   declarations: [],
   providers: [ArticleDataService]
