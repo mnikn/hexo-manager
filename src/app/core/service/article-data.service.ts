@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import { FileReader } from './file-reader/file-reader';
 import { MarkdownFileReader } from './file-reader/markdown-file-reader';
 import { Global } from '../../global';
+import { MarkdownParser } from './file-reader/parser/markdown-parser';
 
 @Injectable()
 export class ArticleDataService {
@@ -17,12 +18,25 @@ export class ArticleDataService {
   private _onSelectChange: (item) => void;
   private _fileReader: FileReader<Article>;
   private _hasLoadFile: boolean;
+  private _previewCache: Map<number, string>;
+  private _parser: MarkdownParser;
 
   constructor(private global: Global) {
     this._list = [];
     this._selection = new SingleSelection();
     this._fileReader = new MarkdownFileReader();
     this._hasLoadFile = false;
+    this._previewCache = new Map();
+    this._parser = new MarkdownParser();
+  }
+
+  public getPreviewContent(id: number): string {
+    if (this._previewCache.has(id)) {
+      return this._previewCache.get(id);
+    }
+
+    this._previewCache[id] = this._parser.parse(this.getItem(id).content);
+    return this._previewCache[id];
   }
 
   public getItem(id: number): Article {

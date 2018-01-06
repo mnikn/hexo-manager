@@ -14,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 import { SettingsComponent } from './menu/settings/settings.component';
 import { NormalTabComponent } from './menu/settings/normal-tab/normal-tab.component';
 import { PerformanceTabComponent } from './menu/settings/performance-tab/performance-tab.component';
+import { PreviewComponent } from './article-list/preview/preview.component';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { PerformanceTabComponent } from './menu/settings/performance-tab/perform
     ToolBarComponent,
     ArticleListComponent,
     ArticleCardComponent,
+    PreviewComponent,
     SettingsComponent,
     NormalTabComponent,
     PerformanceTabComponent]

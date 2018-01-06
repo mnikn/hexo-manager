@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { ButtonComponent } from './button/button.component';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { ButtonGroupComponent } from './button-group/button-group.component';
-import { PreviewComponent } from './preview/preview.component';
 
 @NgModule({
   imports: [
@@ -12,13 +11,11 @@ import { PreviewComponent } from './preview/preview.component';
   ],
   exports: [
     ButtonComponent,
-    ButtonGroupComponent,
-    PreviewComponent
+    ButtonGroupComponent
   ],
   declarations: [
     ButtonComponent,
-    ButtonGroupComponent,
-    PreviewComponent]
+    ButtonGroupComponent]
 })
 export class ComponentModule {
 }

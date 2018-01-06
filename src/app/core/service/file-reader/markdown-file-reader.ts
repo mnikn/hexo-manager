@@ -21,6 +21,7 @@ export class MarkdownFileReader implements FileReader<Article> {
     let readline = electron.remote.require('readline');
 
     let article = new Article();
+    article.content = '';
 
     let infoLines = 0;
     let lines = fs.readFileSync(path).toString().split('\n');

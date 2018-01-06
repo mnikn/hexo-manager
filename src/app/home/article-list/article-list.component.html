@@ -8,7 +8,7 @@
       <div style="padding:30px;">
         <div nz-row
              [nzGutter]="8"
-             style="margin-left: 10px;height: 5000px">
+             style="margin-left: 10px;">
           <div nz-col
                [nzSpan]="previewArticle? 12 : 8"
                style="margin-bottom: 8px"
@@ -23,8 +23,8 @@
   <div nz-col [nzSpan]="12" *ngIf="previewArticle">
     <div class="scrollable-content"
          [style.height]="contentHeight + 'px'">
-      <div style="height: 2000px">
-        <app-article-preview [rawContent]="previewArticle.content"></app-article-preview>
+      <div>
+        <app-article-preview [previewArticleId]="previewArticle.id"></app-article-preview>
       </div>
     </div>
   </div>
