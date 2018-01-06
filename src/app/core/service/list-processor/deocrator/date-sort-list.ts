@@ -8,9 +8,8 @@ export class DateSortList extends ListDecorator {
   }
 
   public getList(): Article[] {
-    console.log('date');
     return this.processor.getInfo().sortMethod === SortMethod.date ?
-      this.processor.getList().sort(e => e.createDate.getTime()) :
+      this.processor.getList().sort((a, b) => b.createDate.getTime() - a.createDate.getTime()) :
       this.processor.getList();
   }
 

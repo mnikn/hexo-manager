@@ -15,6 +15,7 @@ import { SettingsComponent } from './menu/settings/settings.component';
 import { NormalTabComponent } from './menu/settings/normal-tab/normal-tab.component';
 import { PerformanceTabComponent } from './menu/settings/performance-tab/performance-tab.component';
 import { PreviewComponent } from './article-list/preview/preview.component';
+import { NoDataComponent } from './no-data/no-data.component';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { PreviewComponent } from './article-list/preview/preview.component';
     PreviewComponent,
     SettingsComponent,
     NormalTabComponent,
-    PerformanceTabComponent]
+    PerformanceTabComponent,
+    NoDataComponent]
 })
 export class HomeModule {
 }

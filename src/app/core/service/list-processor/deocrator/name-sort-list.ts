@@ -9,7 +9,7 @@ export class NameSortList extends ListDecorator {
 
   public getList(): Article[] {
     return this.processor.getInfo().sortMethod === SortMethod.name ?
-      this.processor.getList().sort(e => e.title.length) :
+      this.processor.getList().sort((a, b) => a.title.length - b.title.length) :
       this.processor.getList();
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { Global } from './global';
+import { Router } from '@angular/router';
 declare let electron: any;
 
 @Component({
@@ -9,6 +10,7 @@ declare let electron: any;
 })
 export class AppComponent implements OnInit {
   constructor(private translateService: TranslateService,
+              private router: Router,
               private global: Global) {
   }
 
@@ -19,6 +21,8 @@ export class AppComponent implements OnInit {
     let configPath = './dist/config.json';
     if (fs.existsSync(configPath)) {
       self.global.hexoDir = JSON.parse(fs.readFileSync(configPath));
+    } else {
+      this.router.navigate(['/home/no-data']);
     }
   }
 

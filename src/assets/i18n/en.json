@@ -13,7 +13,12 @@
       "move_to_post": "move to post box",
       "move_to_draft": "move to draft box",
       "edit": "edit selected article",
-      "search_hint": "input search article name or tag..."
+      "search_hint": "input search article name or tag...",
+      "sort": {
+        "hint": "sort method",
+        "name": "title",
+        "date": "date"
+      }
     },
     "menu": {
       "settings": {
@@ -29,6 +34,10 @@
       "summary": "Summary",
       "post_box": "Post box",
       "draft_box": "Draft box"
+    },
+    "no_data": {
+      "info_title": "Error in scanning hexo directory",
+      "info_description": "There is an error happens on scanning your hexo directory, maybe your have not configure your hexo directory or the configuration is error, please correct it first."
     }
   },
   "editor": {

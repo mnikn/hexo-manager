@@ -13,7 +13,12 @@
       "move_to_post": "移到发表箱",
       "move_to_draft": "移到草稿箱",
       "edit": "编辑选择的文章",
-      "search_hint": "输入要查找的文章名字或标签..."
+      "search_hint": "输入要查找的文章名字或标签...",
+      "sort": {
+        "hint": "排序方式",
+        "name": "标题",
+        "date": "日期"
+      }
     },
     "menu": {
       "settings": {
@@ -29,6 +34,10 @@
       "summary": "概况",
       "post_box": "发表箱",
       "draft_box": "草稿箱"
+    },
+    "no_data": {
+      "info_title": "扫描Hexo目录失败",
+      "info_description": "扫描Hexo目录失败，也许你还没有配置好Hexo目录，或者Hexo目录配置错误，请先在设置里指定Hexo的根目录。"
     }
   },
   "editor": {

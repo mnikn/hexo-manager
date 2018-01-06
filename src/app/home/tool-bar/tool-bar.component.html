@@ -2,14 +2,28 @@
   <app-nz-button-group [buttons]="currentButtons">
   </app-nz-button-group>
 
-  <nz-input
-    style="width: 200px;float: right"
-    [nzType]="'search'"
-    [ngModel]="searchText"
-    (ngModelChange)="onSearch($event)"
-    nzPlaceHolder="{{'home.tool_bar.search_hint' | translate}}">
-  </nz-input>
-
+  <div style="float: right">
+    <nz-tooltip [nzTitle]="'home.tool_bar.sort.hint' | translate" [nzPlacement]="'bottom'">
+      <nz-select style="width: 100px;"
+                 nz-tooltip
+                 [ngModel]="filterOptions[0].value"
+                 [nzDisabled]="user == null"
+                 (ngModelChange)="onSortMethodChange($event)">
+        <nz-option
+          *ngFor="let option of filterOptions"
+          [nzLabel]="option.label | translate"
+          [nzValue]="option.value">
+        </nz-option>
+      </nz-select>
+    </nz-tooltip>
+    <nz-input
+      style="width: 200px;"
+      [nzType]="'search'"
+      [ngModel]="searchText"
+      (ngModelChange)="onSearch($event)"
+      nzPlaceHolder="{{'home.tool_bar.search_hint' | translate}}">
+    </nz-input>
+  </div>
 </div>
 
 

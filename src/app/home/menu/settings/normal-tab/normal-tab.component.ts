@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Global } from '../../../../global';
-import { ArticleDataService } from '../../../../core/service/article-data.service';
+import { Router } from '@angular/router';
 declare let electron: any;
 
 @Component({
@@ -12,7 +12,7 @@ export class NormalTabComponent implements OnInit {
 
   @Output() isProcessing: EventEmitter<boolean> = new EventEmitter();
 
-  constructor(private global: Global, private dataService: ArticleDataService) {
+  constructor(private global: Global, private router: Router) {
   }
 
   ngOnInit() {
@@ -31,6 +31,7 @@ export class NormalTabComponent implements OnInit {
     this.isProcessing.emit(true);
     fs.writeFile('./dist/config.json', JSON.stringify(dirs), 'utf8', (err) => {
       this.isProcessing.emit(false);
+      this.router.navigate(['/home/summary']);
     });
   }
 

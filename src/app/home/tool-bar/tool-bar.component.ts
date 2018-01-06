@@ -2,7 +2,6 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Button } from '../../core/component/button/button';
 import { ArticleListComponent } from '../article-list/article-list.component';
 import { RefreshCommand } from './command/refresh-command';
-import { TagsCommand } from './command/tags-command';
 import { AddCommand } from './command/add-command';
 import { DeleteCommand } from './command/delete-command';
 import { DeployCommand } from './command/deploy-command';
@@ -13,6 +12,8 @@ import { EditCommand } from './command/edit-command';
 import { ArticleStatus } from '../../core/model/article';
 import { ArticleDataService } from '../../core/service/article-data.service';
 import * as _ from 'lodash';
+import { NoDataComponent } from '../no-data/no-data.component';
+import { SortMethod } from '../../core/service/list-processor/list-processor';
 
 @Component({
   selector: 'app-home-tool-bar',
@@ -22,17 +23,17 @@ import * as _ from 'lodash';
 export class ToolBarComponent implements OnInit {
 
   public currentButtons: Button[];
+  public searchText: string;
+  public filterOptions;
 
   private _user: ArticleListComponent;
 
-  public searchText: string;
 
-  private summaryButtons: Button[] = [];
+  private defaultButtons: Button[] = [];
   private postButtons: Button[] = [];
   private draftButtons: Button[] = [];
 
   private refreshButton: Button;
-  private tagsButton: Button;
   private addButton: Button;
   private deleteButton: Button;
   private deployButton: Button;
@@ -47,7 +48,7 @@ export class ToolBarComponent implements OnInit {
 
   ngOnInit() {
     let self = this;
-    this.dataService.registerOnSelectChange(selectedList => {
+    this.dataService.registerOnSelectChange(() => {
       let hasSelectMulti = _.isArray(self.dataService.getSelected()) && self.dataService.getSelected().length > 1;
       self.addButton.disabled = hasSelectMulti;
       self.deployButton.disabled = hasSelectMulti;
@@ -56,6 +57,10 @@ export class ToolBarComponent implements OnInit {
       self.moveToPostButton.disabled = !self.dataService.hasSelected();
       self.editButton.disabled = !self.dataService.hasSelected() || hasSelectMulti;
     });
+    this.filterOptions = [
+      {value: SortMethod.date, label: 'home.tool_bar.sort.date'},
+      {value: SortMethod.name, label: 'home.tool_bar.sort.name'}
+    ];
   }
 
   get user(): ArticleListComponent {
@@ -82,15 +87,21 @@ export class ToolBarComponent implements OnInit {
     this.user.refresh();
   }
 
+  public onSortMethodChange(sortMethod: SortMethod): void {
+    this.user.listInfo.sortMethod = sortMethod;
+    this.user.refresh();
+  }
+
   private changeCurrentButtons(user: any): void {
+    this.currentButtons = [];
     if (user instanceof ArticleListComponent) {
       if (user.listInfo.filterStatus === ArticleStatus.post) {
         this.currentButtons = this.postButtons;
       } else {
         this.currentButtons = this.draftButtons;
       }
-    } else {
-      this.currentButtons = this.summaryButtons;
+    } else if (!(user instanceof NoDataComponent)) {
+      this.currentButtons = this.defaultButtons;
     }
     this.currentButtons.forEach(e => e.command.user = user);
   }
@@ -100,7 +111,6 @@ export class ToolBarComponent implements OnInit {
     const shape = 'circle';
 
     this.refreshButton = new Button(tool_bar.refresh, shape, new RefreshCommand(), size, 'anticon anticon-reload');
-    this.tagsButton = new Button(tool_bar.tags, shape, new TagsCommand(), size, 'anticon anticon-tags');
     this.addButton = new Button(tool_bar.add, shape, new AddCommand(), size, 'anticon anticon-plus');
     this.deleteButton = new Button(tool_bar.delete, shape, new DeleteCommand(), size, 'anticon anticon-minus');
     this.deployButton = new Button(tool_bar.deploy, shape, new DeployCommand(), size, 'anticon anticon-upload');
@@ -108,15 +118,13 @@ export class ToolBarComponent implements OnInit {
     this.moveToDraftButton = new Button(tool_bar.move_to_draft, shape, new MoveToDraftCommand(), size, 'anticon anticon-swap');
     this.editButton = new Button(tool_bar.edit, shape, new EditCommand(), size, 'anticon anticon-edit');
 
-    this.summaryButtons = [
+    this.defaultButtons = [
       this.refreshButton,
-      this.tagsButton,
       this.deployButton
     ];
-    this.summaryButtons.forEach(e => e.command.container = e);
+    this.defaultButtons.forEach(e => e.command.container = e);
     this.postButtons = [
       this.refreshButton,
-      this.tagsButton,
       this.addButton,
       this.deleteButton,
       this.deployButton,
@@ -126,7 +134,6 @@ export class ToolBarComponent implements OnInit {
     this.postButtons.forEach(e => e.command.container = e);
     this.draftButtons = [
       this.refreshButton,
-      this.tagsButton,
       this.addButton,
       this.deleteButton,
       this.deployButton,

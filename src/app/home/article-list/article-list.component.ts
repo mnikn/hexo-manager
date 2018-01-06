@@ -6,6 +6,7 @@ import { ArticleDataService } from '../../core/service/article-data.service';
 import { SelectionMode } from '../../core/service/selection/selection';
 import { ArticleListInfo } from '../../core/service/list-processor/list-processor';
 import * as _ from 'lodash';
+import { Global } from '../../global';
 
 @Component({
   selector: 'app-home-article-list',
@@ -22,6 +23,7 @@ export class ArticleListComponent implements OnInit, AfterViewInit {
   public listInfo: ArticleListInfo;
 
   constructor(public router: Router,
+              public global: Global,
               public dataService: ArticleDataService,
               private route: ActivatedRoute) {
     this.listInfo = new ArticleListInfo();
@@ -38,6 +40,10 @@ export class ArticleListComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
+    if (!this.global.hexoDir) {
+      this.router.navigate(['/home/no-data']);
+    }
+
     this.refresh();
   }
 
