@@ -2,7 +2,9 @@ import { Selection, SelectionMode } from './selection';
 import { Article } from '../../model/article';
 import { Observable } from 'rxjs/Observable';
 import * as _ from 'lodash';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class MultiSelection implements Selection {
   private _selectedList: Article[];
   private _selectChangeCallback: (list: Article[]) => void;

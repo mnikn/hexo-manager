@@ -23,6 +23,10 @@ export class ToolBarComponent implements OnInit {
 
   public currentButtons: Button[];
 
+  private _user: ArticleListComponent;
+
+  public searchText: string;
+
   private summaryButtons: Button[] = [];
   private postButtons: Button[] = [];
   private draftButtons: Button[] = [];
@@ -54,8 +58,12 @@ export class ToolBarComponent implements OnInit {
     });
   }
 
+  get user(): ArticleListComponent {
+    return this._user;
+  }
+
   @Input()
-  set user(user: any) {
+  set user(user: ArticleListComponent) {
     if (!this.currentButtons) {
       this.translateService
         .get('home.tool_bar')
@@ -66,11 +74,17 @@ export class ToolBarComponent implements OnInit {
     } else {
       this.changeCurrentButtons(user);
     }
+    this._user = user;
+  }
+
+  public onSearch(searchText: string): void {
+    this.user.listInfo.searchTitle = searchText;
+    this.user.refresh();
   }
 
   private changeCurrentButtons(user: any): void {
     if (user instanceof ArticleListComponent) {
-      if (user.currentArticleStatus === ArticleStatus.post) {
+      if (user.listInfo.filterStatus === ArticleStatus.post) {
         this.currentButtons = this.postButtons;
       } else {
         this.currentButtons = this.draftButtons;

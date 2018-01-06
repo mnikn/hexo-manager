@@ -13,7 +13,9 @@
                [nzSpan]="previewArticle? 12 : 8"
                style="margin-bottom: 8px"
                *ngFor="let article of articles">
-            <app-home-article-card [article]="article" (click)="onCardClick(article)">
+            <app-home-article-card [article]="article"
+                                   (tagClick)="onTagClick($event)"
+                                   (click)="onCardClick(article)">
             </app-home-article-card>
           </div>
         </div>

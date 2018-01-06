@@ -5,6 +5,8 @@
   <nz-input
     style="width: 200px;float: right"
     [nzType]="'search'"
+    [ngModel]="searchText"
+    (ngModelChange)="onSearch($event)"
     nzPlaceHolder="{{'home.tool_bar.search_hint' | translate}}">
   </nz-input>
 

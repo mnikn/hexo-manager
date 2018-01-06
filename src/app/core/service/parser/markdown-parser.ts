@@ -1,7 +1,8 @@
 import { SyntaxParser } from './syntax-parser';
 import * as marked from 'marked';
+import { Injectable } from '@angular/core';
 
-
+@Injectable()
 export class MarkdownParser implements SyntaxParser<string> {
 
   constructor() {

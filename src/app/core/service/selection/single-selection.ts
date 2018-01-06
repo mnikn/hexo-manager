@@ -1,7 +1,9 @@
 import { Selection, SelectionMode } from './selection';
 import { Article } from '../../model/article';
 import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class SingleSelection implements Selection {
   private _selectedItem: Article;
   private _selectChangeCallback: (item: Article) => void;

@@ -3,7 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Article, ArticleStatus } from '../../core/model/article';
 import { ArticleCardComponent } from './article-card/article-card.component';
 import { ArticleDataService } from '../../core/service/article-data.service';
-import { SelectionMode } from "../../core/service/selection/selection";
+import { SelectionMode } from '../../core/service/selection/selection';
+import { ArticleListInfo } from '../../core/service/list-processor/list-processor';
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-home-article-list',
@@ -12,37 +14,43 @@ import { SelectionMode } from "../../core/service/selection/selection";
 })
 export class ArticleListComponent implements OnInit {
 
-  public currentArticleStatus: ArticleStatus;
+
+  @ViewChildren(ArticleCardComponent)
+  cards: QueryList<ArticleCardComponent>;
   public previewArticle: Article;
   public contentHeight: number = window.screen.height;
   public articles: Article[];
-  @ViewChildren(ArticleCardComponent)
-  cards: QueryList<ArticleCardComponent>;
+  public listInfo: ArticleListInfo;
 
   constructor(public router: Router,
               public dataService: ArticleDataService,
               private route: ActivatedRoute) {
+    this.listInfo = new ArticleListInfo();
     this.route.url.subscribe(value => {
       switch (value[1].path) {
         case 'post':
-          this.currentArticleStatus = ArticleStatus.post;
+          this.listInfo.filterStatus = ArticleStatus.post;
           break;
         case 'draft':
-          this.currentArticleStatus = ArticleStatus.draft;
+          this.listInfo.filterStatus = ArticleStatus.draft;
           break;
       }
     });
   }
 
   ngOnInit() {
+    this.refresh();
+  }
+
+  public refresh(): void {
     if (!this.dataService.hasLoadFile()) {
       this.dataService
         .refresh()
         .subscribe(list => {
-          this.articles = list;
+          this.articles = this.dataService.getList(this.listInfo);
         });
     } else {
-      this.articles = this.dataService.getList();
+      this.articles = this.dataService.getList(this.listInfo);
     }
   }
 
@@ -68,6 +76,27 @@ export class ArticleListComponent implements OnInit {
 
     this.dataService.setSelected(article.id);
     this.previewArticle = article;
+  }
+
+  public onTagClick(tag: string): void {
+    if (_.isNil(this.listInfo.filterTags)) {
+      this.listInfo.filterTags = [];
+    }
+    if (!this.listInfo.filterTags.includes(tag)) {
+      this.listInfo.filterTags.push(tag);
+    } else {
+      this.listInfo.filterTags = this.listInfo.filterTags.filter(e => e !== tag);
+      if (_.isEmpty(this.listInfo.filterTags)) {
+        this.listInfo.filterTags = null;
+      }
+    }
+
+    let filterTags = this.listInfo.filterTags;
+    this.cards.forEach(e => e.buttons.forEach(b => {
+      let buttonTag = b.nativeElement.innerText;
+      b.nzType = filterTags && filterTags.includes(buttonTag) ? 'dashed' : 'primary';
+    }));
+    this.refresh();
   }
 
   public onOutSideClick(): void {

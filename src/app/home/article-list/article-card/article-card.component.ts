@@ -1,7 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
 import { Article } from '../../../core/model/article';
 import { ArticleDataService } from '../../../core/service/article-data.service';
 import { SelectionMode } from '../../../core/service/selection/selection';
+import { NzButtonComponent } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-home-article-card',
@@ -11,7 +12,11 @@ import { SelectionMode } from '../../../core/service/selection/selection';
 export class ArticleCardComponent implements OnInit {
 
   @Input() public article: Article;
+  @Output() tagClick: EventEmitter<string> = new EventEmitter();
 
+
+  @ViewChildren(NzButtonComponent)
+  buttons: QueryList<NzButtonComponent>;
   public startTime: number;
   public endTime: number;
   public time;
@@ -29,7 +34,7 @@ export class ArticleCardComponent implements OnInit {
     let event = window.event;
     event.stopPropagation();
 
-    console.log(tag);
+    this.tagClick.emit(tag);
   }
 
   private getTimeNow(): number {

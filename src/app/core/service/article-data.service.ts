@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Article, ArticleStatus } from '../model/article';
 import { Observable } from 'rxjs/Observable';
 import { SingleSelection } from './selection/single-selection';
@@ -8,7 +8,14 @@ import * as _ from 'lodash';
 import { FileReader } from './file-reader/file-reader';
 import { MarkdownFileReader } from './file-reader/markdown-file-reader';
 import { Global } from '../../global';
-import { MarkdownParser } from './file-reader/parser/markdown-parser';
+import { MarkdownParser } from './parser/markdown-parser';
+import { ArticleListInfo, ListProcessor, ListProcessorBase } from './list-processor/list-processor';
+import { PostList } from './list-processor/deocrator/post-list';
+import { NameSortList } from './list-processor/deocrator/name-sort-list';
+import { DraftList } from './list-processor/deocrator/draft-list';
+import { FilterTagList } from './list-processor/deocrator/filter-tag-list';
+import { DateSortList } from './list-processor/deocrator/date-sort-list';
+import { FilterTitleList } from './list-processor/deocrator/filter-title-list';
 
 @Injectable()
 export class ArticleDataService {
@@ -44,8 +51,15 @@ export class ArticleDataService {
     return this._list[index];
   }
 
-  public getList(): Article[] {
-    return this._list;
+  public getList(info?: ArticleListInfo): Article[] {
+    let processor: ListProcessor = new ListProcessorBase(this._list, info);
+    processor = new PostList(processor);
+    processor = new DraftList(processor);
+    processor = new NameSortList(processor);
+    processor = new DateSortList(processor);
+    processor = new FilterTagList(processor);
+    processor = new FilterTitleList(processor);
+    return processor.getList();
   }
 
   public createItem(): Observable<Article[]> {
@@ -118,20 +132,6 @@ export class ArticleDataService {
   public registerOnSelectChange(callback: (item) => void): void {
     this._onSelectChange = callback;
     this._selection.registerOnSelectChange(callback);
-  }
-
-  private createFakeData(): Article[] {
-    let articles = [new Article(), new Article(), new Article()];
-
-    let i = 0;
-    articles.forEach(e => e.id = i++);
-    i = 1;
-    articles.forEach(e => e.content = 'Content' + i++);
-    i = 1;
-    articles.forEach(e => e.title = '设计模式之禅' + i++);
-    articles.forEach(e => e.createDate = new Date());
-    articles.forEach(e => e.tags = ['tag1', 'tag2', 'tag3', 'tag4', 'tag5']);
-    return articles;
   }
 
   public fireOnSelectChange(): void {

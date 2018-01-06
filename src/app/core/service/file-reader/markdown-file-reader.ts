@@ -1,9 +1,10 @@
 import { Article } from '../../model/article';
 import { FileReader } from './file-reader';
 import { Observable } from 'rxjs/Observable';
+import { Injectable } from '@angular/core';
 declare let electron: any;
 
-
+@Injectable()
 export class MarkdownFileReader implements FileReader<Article> {
 
   private nextId = 0;

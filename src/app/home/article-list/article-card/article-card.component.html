@@ -21,6 +21,7 @@
            *ngFor="let tag of article.tags"
            style="margin-bottom: 8px;">
         <button nz-button
+                #button
                 *ngIf="tag"
                 [nzSize]="'small'"
                 [nzType]="'primary'"
