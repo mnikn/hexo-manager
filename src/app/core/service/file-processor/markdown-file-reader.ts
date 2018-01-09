@@ -39,7 +39,7 @@ export class MarkdownFileReader implements FileReader<Article> {
         ++infoLines;
       }
     }
-    article.file = path;
+    article.path = path;
     return article;
   }
 

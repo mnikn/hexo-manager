@@ -8,9 +8,8 @@ export class DeleteCommand extends Command {
   execute(): any {
     this.user.dataService
       .removeSelected()
-      .subscribe(list => {
-        this.user.articles = list;
-        this.user.previewArticle = null;
+      .subscribe(() => {
+        this.user.refresh();
       });
   }
 }

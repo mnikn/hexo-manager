@@ -15,5 +15,6 @@ export class MoveToPostCommand extends Command {
     } else {
       selected.status = ArticleStatus.post;
     }
+    this.user.refresh();
   }
 }

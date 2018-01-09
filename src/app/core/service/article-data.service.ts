@@ -5,8 +5,8 @@ import { SingleSelection } from './selection/single-selection';
 import { Selection, SelectionMode } from './selection/selection';
 import { MultiSelection } from './selection/multi-selection';
 import * as _ from 'lodash';
-import { FileReader } from './file-reader/file-reader';
-import { MarkdownFileReader } from './file-reader/markdown-file-reader';
+import { FileReader } from './file-processor/file-reader';
+import { MarkdownFileReader } from './file-processor/markdown-file-reader';
 import { Global } from '../../global';
 import { MarkdownParser } from './parser/markdown-parser';
 import { ArticleListInfo, ListProcessor, ListProcessorBase } from './list-processor/list-processor';
@@ -16,6 +16,8 @@ import { DraftList } from './list-processor/deocrator/draft-list';
 import { FilterTagList } from './list-processor/deocrator/filter-tag-list';
 import { DateSortList } from './list-processor/deocrator/date-sort-list';
 import { FilterTitleList } from './list-processor/deocrator/filter-title-list';
+import { FileWriter } from './file-processor/file-writer';
+import { MarkdownFileWriter } from './file-processor/markdown-file-writer';
 
 @Injectable()
 export class ArticleDataService {
@@ -24,6 +26,7 @@ export class ArticleDataService {
   private _selection: Selection;
   private _onSelectChange: (item) => void;
   private _fileReader: FileReader<Article>;
+  private _fileWriter: FileWriter<Article>;
   private _hasLoadFile: boolean;
   private _previewCache: Map<number, string>;
   private _parser: MarkdownParser;
@@ -33,6 +36,7 @@ export class ArticleDataService {
     this._list = [];
     this._selection = new SingleSelection();
     this._fileReader = new MarkdownFileReader();
+    this._fileWriter = new MarkdownFileWriter();
     this._hasLoadFile = false;
     this._previewCache = new Map();
     this._parser = new MarkdownParser();
@@ -70,20 +74,45 @@ export class ArticleDataService {
     });
   }
 
-  public createItem(): Observable<Article[]> {
+  public createItem(status?: ArticleStatus): Observable<Article[]> {
     let self = this;
     return Observable.create(function (observer) {
       let newArticle = new Article();
       newArticle.id = self._list.length;
       newArticle.title = 'Article' + newArticle.id;
+      newArticle.status = status;
       newArticle.createDate = new Date();
+      newArticle.content = '';
+      newArticle = self._fileWriter.createSync(newArticle,
+        status === ArticleStatus.post ?
+          self.global.hexoDir.postDir + newArticle.title + '.md' :
+          self.global.hexoDir.draftDir + newArticle.title + '.md');
       self._list.push(newArticle);
       observer.next(self._list);
     });
   }
 
   public removeSelected(): Observable<Article[]> {
-    return this._selection.removeSelected(this._list);
+    let self = this;
+    return Observable.create(function (observer) {
+      let selected = self._selection.getSelected();
+      if (_.isArray(selected)) {
+        selected.forEach(e => self._fileWriter.deleteSync(e.path));
+      } else {
+        self._fileWriter.deleteSync(selected.path);
+      }
+      observer.next(self._selection.removeSelected(self._list));
+    });
+  }
+
+  public updateItem(data: Article): Observable<Article> {
+    let self = this;
+    return Observable.create(function (observer) {
+      data = self._fileWriter.updateSync(data, data.path);
+      let index = self._list.findIndex(e => e.id === data.id);
+      self._list[index] = data;
+      observer.next(data);
+    });
   }
 
   public refresh(): Observable<Article[]> {

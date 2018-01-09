@@ -1,9 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Button } from '../../core/component/button/button';
 import { TranslateService } from '@ngx-translate/core';
-import { BackWardCommand } from "./command/backward-command";
-import { ArticleInfoCommand } from "./command/article-info-command";
-import { SaveCommand } from "./command/save-command";
+import { BackWardCommand } from './command/backward-command';
+import { ArticleInfoCommand } from './command/article-info-command';
+import { SaveCommand } from './command/save-command';
 
 @Component({
   selector: 'app-editor-tool-bar',

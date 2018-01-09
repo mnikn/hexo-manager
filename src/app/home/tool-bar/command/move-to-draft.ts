@@ -15,5 +15,6 @@ export class MoveToDraftCommand extends Command {
     } else {
       selected.status = ArticleStatus.draft;
     }
+    this.user.refresh();
   }
 }

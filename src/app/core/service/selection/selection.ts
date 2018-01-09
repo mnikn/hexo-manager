@@ -11,7 +11,7 @@ export interface Selection {
   getSelected(): any;
   setSelected(item: any): void;
   diselect(id?: any): void;
-  removeSelected(list: Article[]): Observable<Article[]>;
+  removeSelected(list: Article[]): Article[];
   hasSelected(): boolean;
   isSelected(id: number): boolean;
   registerOnSelectChange(callback: (item) => void);

@@ -6,6 +6,9 @@ export class SaveCommand extends Command {
   }
 
   execute(): any {
-    console.log('save');
+    console.log(this.user.article);
+    this.user.dataService.updateItem(this.user.article).subscribe(item => {
+      this.user.article = item;
+    });
   }
 }

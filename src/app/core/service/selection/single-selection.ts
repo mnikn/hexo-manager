@@ -37,13 +37,10 @@ export class SingleSelection implements Selection {
     return this._selectedItem && this._selectedItem.id === id;
   }
 
-  removeSelected(list: Article[]): Observable<Article[]> {
-    let self = this;
-    return Observable.create(function (observer) {
-      let index = list.findIndex(e => e.id === self._selectedItem.id);
-      list.splice(index, 1);
-      observer.next(list);
-    });
+  removeSelected(list: Article[]): Article[] {
+    let index = list.findIndex(e => e.id === this._selectedItem.id);
+    list.splice(index, 1);
+    return list;
   }
 
   registerOnSelectChange(callback: (item: Article) => void) {

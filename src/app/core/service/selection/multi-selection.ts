@@ -45,13 +45,10 @@ export class MultiSelection implements Selection {
     this.fireOnSelectChange();
   }
 
-  removeSelected(list: Article[]): Observable<Article[]> {
-    let self = this;
-    return Observable.create(function (observer) {
-      let ids = self._selectedList.map(e => e.id);
-      _.remove(list, e => ids.includes(e.id));
-      observer.next(list);
-    });
+  removeSelected(list: Article[]): Article[] {
+    let ids = this._selectedList.map(e => e.id);
+    _.remove(list, e => ids.includes(e.id));
+    return list;
   }
 
   hasSelected(): boolean {

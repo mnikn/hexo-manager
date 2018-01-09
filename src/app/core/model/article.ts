@@ -7,10 +7,10 @@ export class Article {
   private _id: number;
   private _title: string;
   private _status: ArticleStatus;
-  private _file: string;
+  private _path: string;
   private _createDate: Date;
   private _content: string;
-  private _tags: string[];
+  private _tags: string[] = [];
 
 
   get id(): number {
@@ -45,12 +45,12 @@ export class Article {
     this._createDate = value;
   }
 
-  get file(): string {
-    return this._file;
+  get path(): string {
+    return this._path;
   }
 
-  set file(value: string) {
-    this._file = value;
+  set path(value: string) {
+    this._path = value;
   }
 
   get content(): string {
