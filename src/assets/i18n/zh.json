@@ -46,6 +46,11 @@
       "save": "本地保存该文章",
       "article_info": "修改文章的信息",
       "placeholder": "用Markdown开始写作..."
+    },
+    "info_modal": {
+      "title": "文章信息",
+      "article_title": "标题",
+      "article_tags": "标签"
     }
   }
 }

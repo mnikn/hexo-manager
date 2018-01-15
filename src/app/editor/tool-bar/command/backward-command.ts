@@ -7,7 +7,7 @@ export class BackWardCommand extends Command {
   }
 
   execute(): any {
-    let status = this.user.article.status === ArticleStatus.post ? 'post' : 'draft';
+    let status = this.user.outputArticle.status === ArticleStatus.post ? 'post' : 'draft';
     this.user.router.navigate(['/home/article-list/' + status]);
   }
 }

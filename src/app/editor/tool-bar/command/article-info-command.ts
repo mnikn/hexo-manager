@@ -6,6 +6,6 @@ export class ArticleInfoCommand extends Command {
   }
 
   execute(): any {
-    console.log('article info');
+    this.user.showInfoModal();
   }
 }

@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import SimpleMDE = require('simplemde');
 import { ArticleDataService } from '../core/service/article-data.service';
 import { Simplemde } from 'ng2-simplemde';
+import { InfoModalComponent } from "./info-modal/info-modal.component";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-editor',
@@ -14,8 +16,10 @@ export class EditorComponent implements OnInit, AfterViewInit {
 
 
   public contentHeight: number = window.screen.height;
-  public article: Article;
+  public outputArticle: Article;
+  public inputArticle: Article;
   @ViewChild('editor') private editor: Simplemde;
+  @ViewChild(InfoModalComponent) private infoModal: InfoModalComponent;
 
 
   constructor(public router: Router,
@@ -26,12 +30,19 @@ export class EditorComponent implements OnInit, AfterViewInit {
   ngOnInit() {
     let self = this;
     this.route.paramMap.subscribe(
-      e => self.article = self.dataService.getItem(Number(e.get('id'))));
+      e => {
+        self.inputArticle = self.dataService.getItem(Number(e.get('id')));
+        self.outputArticle = _.cloneDeep(self.inputArticle);
+      });
   }
 
   ngAfterViewInit(): void {
     let self = this;
-    this.editor.registerOnChange(value => self.article.content = value);
+    this.editor.registerOnChange(value => self.outputArticle.content = value);
+  }
+
+  public showInfoModal(): void {
+    this.infoModal.showModal(this.outputArticle);
   }
 
 }

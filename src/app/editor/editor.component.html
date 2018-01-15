@@ -4,6 +4,7 @@
     </app-editor-tool-bar>
   </nz-header>
   <nz-content style="margin-top: 1px;overflow: scroll">
-    <simplemde #editor [ngModel]="article.content"></simplemde>
+    <simplemde #editor [ngModel]="outputArticle.content"></simplemde>
   </nz-content>
 </nz-layout>
+<app-editor-info-modal></app-editor-info-modal>

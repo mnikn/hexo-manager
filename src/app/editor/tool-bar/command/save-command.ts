@@ -7,8 +7,8 @@ export class SaveCommand extends Command {
 
   execute(): any {
     console.log(this.user.article);
-    this.user.dataService.updateItem(this.user.article).subscribe(item => {
-      this.user.article = item;
+    this.user.dataService.updateItem(this.user.outputArticle).subscribe(item => {
+      this.user.outputArticle = item;
     });
   }
 }

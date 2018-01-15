@@ -8,6 +8,8 @@ import { ComponentModule } from '../core/component/component.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
 import { TranslateModule } from '@ngx-translate/core';
 import { SIMPLEMDE_CONFIG, SimplemdeModule } from 'ng2-simplemde';
+import { InfoModalComponent } from './info-modal/info-modal.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -17,6 +19,7 @@ import { SIMPLEMDE_CONFIG, SimplemdeModule } from 'ng2-simplemde';
     ComponentModule,
     NgZorroAntdModule,
     TranslateModule,
+    ReactiveFormsModule,
     SimplemdeModule.forRoot({
       provide: SIMPLEMDE_CONFIG,
       useValue: {
@@ -31,7 +34,8 @@ import { SIMPLEMDE_CONFIG, SimplemdeModule } from 'ng2-simplemde';
   providers: [],
   declarations: [
     EditorComponent,
-    ToolBarComponent]
+    ToolBarComponent,
+    InfoModalComponent]
 })
 
 export class EditorModule {
