@@ -2,7 +2,7 @@
      [nzGutter]="1"
      style="height: 100%;overflow: hidden">
   <div nz-col [nzSpan]="previewArticle? 12 : 24">
-    <nz-spin [nzSpinning]="dataService.isRefreshing()" [nzSize]="'large'">
+    <nz-spin [nzSpinning]="dataService.isLoading()" [nzSize]="'large'">
       <div class="scrollable-content"
            (click)="onOutSideClick()"
            [style.height]="contentHeight + 'px'">

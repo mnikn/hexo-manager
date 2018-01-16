@@ -30,7 +30,7 @@ export class ArticleDataService {
   private _hasLoadFile: boolean;
   private _previewCache: Map<number, string>;
   private _parser: MarkdownParser;
-  private _isRefreshing: boolean;
+  private _isLoading: boolean;
 
   constructor(private global: Global) {
     this._list = [];
@@ -40,7 +40,7 @@ export class ArticleDataService {
     this._hasLoadFile = false;
     this._previewCache = new Map();
     this._parser = new MarkdownParser();
-    this._isRefreshing = false;
+    this._isLoading = false;
   }
 
   public getPreviewContent(id: number): Observable<string> {
@@ -117,7 +117,7 @@ export class ArticleDataService {
 
   public refresh(): Observable<Article[]> {
     let self = this;
-    this._isRefreshing = true;
+    this._isLoading = true;
     return Observable.create(function (observer) {
       if (!self.global.hexoDir) {
         return;
@@ -130,14 +130,18 @@ export class ArticleDataService {
       self._list = postList.concat(draftList);
       self._hasLoadFile = true;
       setTimeout(() => {
-        self._isRefreshing = false;
+        self._isLoading = false;
       }, 500);
       observer.next();
     });
   }
 
-  public isRefreshing(): boolean {
-    return this._isRefreshing;
+  public isLoading(): boolean {
+    return this._isLoading;
+  }
+
+  public setIsLoading(isLoading: boolean): void {
+    this._isLoading = isLoading;
   }
 
   public hasLoadFile(): boolean {
