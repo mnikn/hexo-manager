@@ -4,6 +4,9 @@
     "cancel": "取消"
   },
   "home": {
+    "summary":{
+      "article_count": "你已经发布了{{value}}篇文章，保持决心！"
+    },
     "tool_bar": {
       "refresh": "刷新文章",
       "add": "添加新文章",

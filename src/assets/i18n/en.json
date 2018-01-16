@@ -4,6 +4,9 @@
     "cancel": "cancel"
   },
   "home": {
+    "summary":{
+      "article_count": "You have been posted {{value}} articles，keep determination!"
+    },
     "tool_bar": {
       "refresh": "refresh articles",
       "add": "add article",

@@ -1,3 +1,9 @@
-<p>
-  summary works!
-</p>
+<div class="content-body">
+  <nz-spin style="height: 100%" [nzSpinning]="dataService.isLoading()" [nzSize]="'large'">
+    <div style="height: 100%">
+      <p [translate]="'home.summary.article_count'" [translateParams]="{value: articles.length}">
+      </p>
+    </div>
+  </nz-spin>
+</div>
+
