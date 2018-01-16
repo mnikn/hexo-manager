@@ -1,34 +1,39 @@
-<nz-card class="card"
-         [class.card-selected]="dataService.isSelected(article.id) && dataService.getSelectionMode() === 0"
-         (mousedown)="onMouseDown()"
-         (mouseup)="onMouseUp()"
-         style="border-radius: 10px;cursor: pointer">
-  <ng-template #title>
-    {{article.title}}
-  </ng-template>
-  <ng-template #extra>
-    <div>{{article.createDate | date: 'yyyy/MM/dd'}}
-      <label nz-checkbox
-             *ngIf="dataService.getSelectionMode() === 1"
-             [ngModel]="dataService.isSelected(this.article.id)">
-      </label>
-    </div>
-  </ng-template>
-  <ng-template #body>
-    <div nz-row [nzGutter]="8" style="height: 50px">
-      <div nz-col
-           [nzSpan]="6"
-           *ngFor="let tag of article.tags"
-           style="margin-bottom: 8px;">
-        <button nz-button
-                #button
-                *ngIf="tag"
-                [nzSize]="'small'"
-                [nzType]="'primary'"
-                (click)="onTagClick(tag)">
-          <span>{{tag}}</span>
-        </button>
+<nz-tooltip [nzTitle]="article.title" [nzPlacement]="'bottom'">
+  <nz-card class="card"
+           nz-tooltip
+           [class.card-selected]="dataService.isSelected(article.id) && dataService.getSelectionMode() === 0"
+           (mousedown)="onMouseDown()"
+           (mouseup)="onMouseUp()"
+           style="border-radius: 10px;cursor: pointer">
+    <ng-template #title>
+      {{article.title}}
+    </ng-template>
+    <ng-template #extra>
+      <div>{{article.createDate | date: 'yyyy/MM/dd'}}
+        <label nz-checkbox
+               *ngIf="dataService.getSelectionMode() === 1"
+               [ngModel]="dataService.isSelected(this.article.id)">
+        </label>
       </div>
-    </div>
-  </ng-template>
-</nz-card>
+    </ng-template>
+    <ng-template #body>
+      <div nz-row [nzGutter]="8" style="height: 50px">
+        <div nz-col
+             [nzSpan]="6"
+             *ngFor="let tag of article.tags"
+             style="margin-bottom: 8px;">
+          <button nz-button
+                  #button
+                  *ngIf="tag"
+                  [nzSize]="'small'"
+                  [nzType]="'primary'"
+                  (click)="onTagClick(tag)">
+            <span>{{tag}}</span>
+          </button>
+        </div>
+      </div>
+    </ng-template>
+  </nz-card>
+
+</nz-tooltip>
+

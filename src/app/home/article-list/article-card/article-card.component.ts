@@ -1,8 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild,
+  ViewChildren
+} from '@angular/core';
 import { Article } from '../../../core/model/article';
 import { ArticleDataService } from '../../../core/service/article-data.service';
 import { SelectionMode } from '../../../core/service/selection/selection';
-import { NzButtonComponent } from 'ng-zorro-antd';
+import { NzButtonComponent, NzToolTipComponent } from 'ng-zorro-antd';
 
 @Component({
   selector: 'app-home-article-card',
@@ -13,6 +16,7 @@ export class ArticleCardComponent implements OnInit {
 
   @Input() public article: Article;
   @Output() tagClick: EventEmitter<string> = new EventEmitter();
+  @ViewChild(NzToolTipComponent) tooltip;
 
 
   @ViewChildren(NzButtonComponent)
