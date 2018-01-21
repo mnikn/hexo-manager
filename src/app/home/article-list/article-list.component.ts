@@ -1,4 +1,7 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit, Component, OnInit, QueryList, ViewChild,
+  ViewChildren, ElementRef
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Article, ArticleStatus } from '../../core/model/article';
 import { ArticleCardComponent } from './article-card/article-card.component';
@@ -17,10 +20,12 @@ export class ArticleListComponent implements OnInit, AfterViewInit {
 
   @ViewChildren(ArticleCardComponent)
   cards: QueryList<ArticleCardComponent>;
+  @ViewChild('list') public listElement: ElementRef;
   public previewArticle: Article;
   public contentHeight: number = window.screen.height;
   public articles: Article[];
   public listInfo: ArticleListInfo;
+  private scrollDistance = 250;
 
   constructor(public router: Router,
               public global: Global,
@@ -69,28 +74,9 @@ export class ArticleListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  public onCardClick(article: Article): void {
-    let event = window.event;
-    event.stopPropagation();
-
-    if (this.dataService.getSelectionMode() === SelectionMode.multi) {
-      if (this.dataService.isSelected(article.id)) {
-        this.dataService.diselect(article.id);
-      } else {
-        this.dataService.setSelected(article.id);
-      }
-      this.previewArticle = null;
-      return;
-    }
-
-    if (this.previewArticle && this.previewArticle.id === article.id) {
-      this.dataService.diselect(article.id);
-      this.previewArticle = null;
-      return;
-    }
-
-    this.dataService.setSelected(article.id);
-    this.previewArticle = article;
+  public onCardClick(article: Article, card): void {
+    this.select(article);
+    this.scrollToCard(card);
   }
 
   public onTagClick(tag: string): void {
@@ -122,6 +108,38 @@ export class ArticleListComponent implements OnInit, AfterViewInit {
       let buttonTag = b.nativeElement.innerText;
       b.nzType = filterTags && filterTags.includes(buttonTag) ? 'dashed' : 'primary';
     }));
+  }
+
+  private select(article: Article): void {
+    let event = window.event;
+    event.stopPropagation();
+
+    if (this.dataService.getSelectionMode() === SelectionMode.multi) {
+      if (this.dataService.isSelected(article.id)) {
+        this.dataService.diselect(article.id);
+      } else {
+        this.dataService.setSelected(article.id);
+      }
+      this.previewArticle = null;
+      return;
+    }
+
+    if (this.previewArticle && this.previewArticle.id === article.id) {
+      this.dataService.diselect(article.id);
+      this.previewArticle = null;
+      return;
+    }
+
+    this.dataService.setSelected(article.id);
+    this.previewArticle = article;
+  }
+
+  private scrollToCard(card): void {
+    let duration = 100;
+    let pos = card.offsetTop - this.scrollDistance;
+    setTimeout(() => {
+      this.listElement.nativeElement.scrollTop = pos;
+    }, duration);
   }
 
 }

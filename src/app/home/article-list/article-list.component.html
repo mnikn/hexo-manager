@@ -4,6 +4,7 @@
   <div nz-col [nzSpan]="previewArticle? 12 : 24">
     <nz-spin [nzSpinning]="dataService.isLoading()" [nzSize]="'large'">
       <div class="scrollable-content"
+           #list
            (click)="onOutSideClick()"
            [style.height]="contentHeight + 'px'">
         <div style="padding:30px;">
@@ -11,12 +12,13 @@
                [nzGutter]="8"
                style="margin-left: 10px;">
             <div nz-col
+                 #card
                  [nzSpan]="previewArticle? 12 : 8"
                  style="margin-bottom: 8px"
                  *ngFor="let article of articles">
               <app-home-article-card [article]="article"
                                      (tagClick)="onTagClick($event)"
-                                     (click)="onCardClick(article)">
+                                     (click)="onCardClick(article,card)">
               </app-home-article-card>
             </div>
           </div>

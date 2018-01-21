@@ -1,12 +1,12 @@
 import {
-  AfterViewInit, Component, EventEmitter, Input, OnInit, Output, QueryList, ViewChild,
+  Component, ElementRef, EventEmitter, Input, OnInit, Output, QueryList, ViewChild,
   ViewChildren
 } from '@angular/core';
 import { Article } from '../../../core/model/article';
 import { ArticleDataService } from '../../../core/service/article-data.service';
 import { SelectionMode } from '../../../core/service/selection/selection';
 import { NzButtonComponent, NzToolTipComponent } from 'ng-zorro-antd';
-import { Global } from "../../../global";
+import { Global } from '../../../global';
 
 @Component({
   selector: 'app-home-article-card',
