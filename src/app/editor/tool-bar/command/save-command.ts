@@ -6,8 +6,10 @@ export class SaveCommand extends Command {
   }
 
   execute(): any {
-    console.log(this.user.article);
-    this.user.dataService.updateItem(this.user.outputArticle).subscribe(item => {
+    let path = this.user.outputArticle.path.split('/');
+    path[path.length - 1] = this.user.outputArticle.title + '.md';
+    path = path.join('/');
+    this.user.dataService.updateItem(this.user.outputArticle, path).subscribe(item => {
       this.user.outputArticle = item;
     });
   }

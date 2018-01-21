@@ -105,10 +105,10 @@ export class ArticleDataService {
     });
   }
 
-  public updateItem(data: Article): Observable<Article> {
+  public updateItem(data: Article, path?: string): Observable<Article> {
     let self = this;
     return Observable.create(function (observer) {
-      data = self._fileWriter.updateSync(data, data.path);
+      data = self._fileWriter.updateSync(data, path ? path : data.path);
       let index = self._list.findIndex(e => e.id === data.id);
       self._list[index] = data;
       observer.next(data);

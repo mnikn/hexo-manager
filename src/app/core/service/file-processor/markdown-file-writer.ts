@@ -24,7 +24,7 @@ export class MarkdownFileWriter implements FileWriter<Article> {
   }
 
   updateSync(data: Article, path: string): Article {
-    this.deleteSync(path);
+    this.deleteSync(data.path);
     return this.createSync(data, path);
   }
 
