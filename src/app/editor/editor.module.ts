@@ -23,7 +23,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     SimplemdeModule.forRoot({
       provide: SIMPLEMDE_CONFIG,
       useValue: {
+        autofocus: true,
         placeholder: '用Markdown开始写作...',
+        spellChecker: false,
         renderingConfig: {
           codeSyntaxHighlighting: true
         },
