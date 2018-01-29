@@ -15,6 +15,12 @@ export class MoveToPostCommand extends Command {
     } else {
       selected.status = ArticleStatus.post;
     }
-    this.user.refresh();
+    let path = selected.path.split('/');
+    path[path.length - 2] = '_posts';
+    path[path.length - 1] = selected.title + '.md';
+    path = path.join('/');
+    this.user.dataService.updateItem(selected, path).subscribe(() => {
+      this.user.refresh();
+    });
   }
 }
