@@ -10,7 +10,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "watch": "ng build -watch dist/",
-    "ele": "electron main.ts"
+    "ele": "electron main.ts",
+    "electron-build": "electron-builder",
+    "electron-pack": "electron-builder --dir"
   },
   "private": true,
   "dependencies": {
@@ -27,6 +29,7 @@
     "@ngx-translate/http-loader": "^2.0.1",
     "@types/lodash": "^4.14.92",
     "@types/marked": "^0.3.0",
+    "angular2-hotkeys": "^2.0.3",
     "core-js": "^2.4.1",
     "highlight.js": "^9.12.0",
     "jquery": "^3.2.1",
@@ -46,6 +49,7 @@
     "@types/node": "~6.0.60",
     "codelyzer": "^4.0.1",
     "electron": "^1.7.10",
+    "electron-packager": "^10.1.1",
     "jasmine-core": "~2.6.2",
     "jasmine-spec-reporter": "~4.1.0",
     "karma": "~1.7.0",
@@ -58,5 +62,18 @@
     "ts-node": "~3.2.0",
     "tslint": "~5.7.0",
     "typescript": "~2.4.2"
+  },
+  "build": {
+    "appId": "com.mnikn.hexo-manager",
+    "copyright": "mnikn",
+    "productName": "hexo-manager",
+    "dmg": {
+      "window": {
+        "x": 100,
+        "y": 100,
+        "width": 1366,
+        "height": 768
+      }
+    }
   }
 }

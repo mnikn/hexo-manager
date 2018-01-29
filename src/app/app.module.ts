@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 
 import { AppComponent } from './app.component';
+import { HotkeyModule } from 'angular2-hotkeys';
 import { AppRoutingModule } from './app-routing.module';
 import { HomeModule } from './home/home.module';
 import { NgZorroAntdModule } from 'ng-zorro-antd';
@@ -26,6 +27,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     BrowserModule,
     HttpClientModule,
+    HotkeyModule.forRoot(),
     NgZorroAntdModule.forRoot(),
     TranslateModule.forRoot({
       loader: {

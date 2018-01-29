@@ -65,11 +65,13 @@ export class ArticleListComponent implements OnInit, AfterViewInit {
         .subscribe(() => {
           self.dataService.getList(self.listInfo).subscribe(list => {
             self.articles = list;
+            self.dataService.diselect();
           });
         });
     } else {
       this.dataService.getList(this.listInfo).subscribe(list => {
         this.articles = list;
+        this.dataService.diselect();
       });
     }
   }

@@ -14,6 +14,8 @@ import { ArticleDataService } from '../../core/service/article-data.service';
 import * as _ from 'lodash';
 import { NoDataComponent } from '../no-data/no-data.component';
 import { SortMethod } from '../../core/service/list-processor/list-processor';
+import { HotkeyService } from '../../core/service/hotkey.service';
+import { Global } from '../../global';
 
 @Component({
   selector: 'app-home-tool-bar',
@@ -42,7 +44,9 @@ export class ToolBarComponent implements OnInit {
   private editButton: Button;
 
 
-  constructor(private dataService: ArticleDataService,
+  constructor(private global: Global,
+              private dataService: ArticleDataService,
+              private hotkeyService: HotkeyService,
               private translateService: TranslateService) {
   }
 
@@ -142,6 +146,18 @@ export class ToolBarComponent implements OnInit {
     ];
     this.draftButtons.forEach(e => e.command.container = e);
     this.dataService.fireOnSelectChange();
+
+    this.hotkeyService.bindKey(this.global.hotkey.home.edit, () => {
+      if (!this.editButton.disabled) {
+        this.editButton.command.execute();
+      }
+    }).bindKey(this.global.hotkey.home.create, () => {
+      if (!this.addButton.disabled) {
+        this.addButton.command.execute();
+      }
+    }).bindKey(this.global.hotkey.home.refresh, () => {
+      this.refreshButton.command.execute();
+    });
   }
 
 }

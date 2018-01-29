@@ -16,14 +16,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.initTranslation();
-    let self = this;
-    let fs = electron.remote.require('fs');
-    let configPath = './dist/config.json';
-    if (fs.existsSync(configPath)) {
-      self.global.hexoDir = JSON.parse(fs.readFileSync(configPath));
-    } else {
-      this.router.navigate(['/home/no-data']);
-    }
+    this.initHotKey();
+    this.initHexoDir();
   }
 
   private initTranslation(): void {
@@ -32,5 +26,27 @@ export class AppComponent implements OnInit {
 
     let browserLanguage = this.translateService.getBrowserLang();
     this.translateService.use(browserLanguage.match(/en|zh/) ? browserLanguage : 'en');
+  }
+
+  private initHotKey(): void {
+    let fs = electron.remote.require('fs');
+    if (fs.existsSync('./dist/hotkey.json')) {
+      this.global.hotkey = JSON.parse(fs.readFileSync('./dist/hotkey.json'));
+    } else {
+      fs.writeFileSync('./dist/hotkey.json',
+        JSON.stringify(this.global.hotkey),
+        'utf8');
+    }
+  }
+
+  private initHexoDir(): void {
+    let self = this;
+    let fs = electron.remote.require('fs');
+    let configPath = './dist/config.json';
+    if (fs.existsSync(configPath)) {
+      self.global.hexoDir = JSON.parse(fs.readFileSync(configPath));
+    } else {
+      this.router.navigate(['/home/no-data']);
+    }
   }
 }
